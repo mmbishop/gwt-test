@@ -19,11 +19,11 @@ package com.mikebishop.gwttest.functions;
 import com.mikebishop.gwttest.model.Context;
 
 /**
- * A function that is invoked by the GWT <code>given</code>, <code>when</code>, <code>then</code> or
- * <code>and</code> method. This function takes two arguments: a value argument of type <code>V</code> and an
- * instance of a Context subclass.
+ * A function that is invoked by the GWT {@code given}, {@code when}, {@code then} or
+ * {@code and} method. This function takes two arguments: a value argument of type {@code V} and an
+ * instance of a {@link Context} subclass.
  * @param <V> value argument class
- * @param <T> subclass of <code>Context</code> declared in the test class in which this function exists
+ * @param <T> subclass of {@link Context} declared in the test class in which this function exists
  */
 @FunctionalInterface
 public interface GwtFunctionWithArgument<V, T extends Context> {

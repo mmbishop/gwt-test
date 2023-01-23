@@ -19,9 +19,9 @@ package com.mikebishop.gwttest.functions;
 import com.mikebishop.gwttest.model.Context;
 
 /**
- * A function that is invoked by the GWT <code>given</code>, <code>when</code>, <code>then</code> or
- * <code>and</code> method. An instance of a <code>Context</code> subclass is passed as the argument to the function.
- * @param <T> subclass of <code>Context</code> declared in the test class in which this function exists
+ * A function that is invoked by the GWT {@code given}, {@code when}, {@code then} or
+ * {@code and} method. An instance of a {@link Context} subclass is passed as the argument to the function.
+ * @param <T> subclass of {@link Context} declared in the test class in which this function exists
  */
 @FunctionalInterface
 public interface GwtFunction<T extends Context> {

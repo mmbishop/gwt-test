@@ -66,44 +66,12 @@ public class GwtTest<T extends Context> {
 
     /**
      * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Given clause
-     * @param arg a {@code String} argument
+     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Given clause. This function takes
+     *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
+     * @param arg an argument of type {@code V}
      * @return this {@code GwtTest} object
      */
-    public final GwtTest<T> given(GwtFunctionWithArgument<String, T> gwtFunction, String arg) {
-        gwtFunction.apply(arg, context);
-        return this;
-    }
-
-    /**
-     * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Given clause
-     * @param arg a {@code Double} argument
-     * @return this {@code GwtTest} object
-     */
-    public final GwtTest<T> given(GwtFunctionWithArgument<Double, T> gwtFunction, Double arg) {
-        gwtFunction.apply(arg, context);
-        return this;
-    }
-
-    /**
-     * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Given clause
-     * @param arg an {@code Integer} argument
-     * @return this {@code GwtTest} object
-     */
-    public final GwtTest<T> given(GwtFunctionWithArgument<Integer, T> gwtFunction, Integer arg) {
-        gwtFunction.apply(arg, context);
-        return this;
-    }
-
-    /**
-     * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Given clause
-     * @param arg an {@code Object} argument
-     * @return this {@code GwtTest} object
-     */
-    public final GwtTest<T> given(GwtFunctionWithArgument<Object, T> gwtFunction, Object arg) {
+    public final <V> GwtTest<T> given(GwtFunctionWithArgument<V, T> gwtFunction, V arg) {
         gwtFunction.apply(arg, context);
         return this;
     }
@@ -121,44 +89,12 @@ public class GwtTest<T extends Context> {
 
     /**
      * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause
-     * @param arg a {@code String} argument
+     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause. This function takes
+     *      *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
+     * @param arg an argument of type {@code V}
      * @return this {@code GwtTest} object
      */
-    public final GwtTest<T> when(GwtFunctionWithArgument<String, T> gwtFunction, String arg) {
-        gwtFunction.apply(arg, context);
-        return this;
-    }
-
-    /**
-     * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause
-     * @param arg a {@code Double} argument
-     * @return this {@code GwtTest} object
-     */
-    public final GwtTest<T> when(GwtFunctionWithArgument<Double, T> gwtFunction, Double arg) {
-        gwtFunction.apply(arg, context);
-        return this;
-    }
-
-    /**
-     * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause
-     * @param arg an {@code Integer} argument
-     * @return this {@code GwtTest} object
-     */
-    public final GwtTest<T> when(GwtFunctionWithArgument<Integer, T> gwtFunction, Integer arg) {
-        gwtFunction.apply(arg, context);
-        return this;
-    }
-
-    /**
-     * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause
-     * @param arg an {@code Object} argument
-     * @return this {@code GwtTest} object
-     */
-    public final GwtTest<T> when(GwtFunctionWithArgument<Object, T> gwtFunction, Object arg) {
+    public final <V> GwtTest<T> when(GwtFunctionWithArgument<V, T> gwtFunction, V arg) {
         gwtFunction.apply(arg, context);
         return this;
     }
@@ -176,44 +112,12 @@ public class GwtTest<T extends Context> {
 
     /**
      * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Then clause
-     * @param arg a {@code String} argument
+     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Then clause. This function takes
+     *      *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
+     * @param arg an argument of type {@code V}
      * @return this {@code GwtTest} object
      */
-    public final GwtTest<T> then(GwtFunctionWithArgument<String, T> gwtFunction, String arg) {
-        gwtFunction.apply(arg, context);
-        return this;
-    }
-
-    /**
-     * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Then clause
-     * @param arg a {@code Double} argument
-     * @return this {@code GwtTest} object
-     */
-    public final GwtTest<T> then(GwtFunctionWithArgument<Double, T> gwtFunction, Double arg) {
-        gwtFunction.apply(arg, context);
-        return this;
-    }
-
-    /**
-     * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Then clause
-     * @param arg an {@code Integer} argument
-     * @return this {@code GwtTest} object
-     */
-    public final GwtTest<T> then(GwtFunctionWithArgument<Integer, T> gwtFunction, Integer arg) {
-        gwtFunction.apply(arg, context);
-        return this;
-    }
-
-    /**
-     * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Then clause
-     * @param arg an {@code Object} argument
-     * @return this {@code GwtTest} object
-     */
-    public final GwtTest<T> then(GwtFunctionWithArgument<Object, T> gwtFunction, Object arg) {
+    public final <V> GwtTest<T> then(GwtFunctionWithArgument<V, T> gwtFunction, V arg) {
         gwtFunction.apply(arg, context);
         return this;
     }
@@ -232,47 +136,12 @@ public class GwtTest<T extends Context> {
     /**
      * Invokes the given function on the given argument and context object.
      * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of an And clause attached
-     *                                       to a Given, When or Then
-     * @param arg a {@code String} argument
+     *                                       to a Given, When or Then.  This function takes an argument of type {@code V}
+     *                                       and an instance of a subclass of {@link Context}.
+     * @param arg an argument of type {@code V}
      * @return this {@code GwtTest} object
      */
-    public final GwtTest<T> and(GwtFunctionWithArgument<String, T> gwtFunction, String arg) {
-        gwtFunction.apply(arg, context);
-        return this;
-    }
-
-    /**
-     * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of an And clause attached
-     *                                       to a Given, When or Then
-     * @param arg a {@code Double} argument
-     * @return this {@code GwtTest} object
-     */
-    public final GwtTest<T> and(GwtFunctionWithArgument<Double, T> gwtFunction, Double arg) {
-        gwtFunction.apply(arg, context);
-        return this;
-    }
-
-    /**
-     * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of an And clause attached
-     *                                       to a Given, When or Then
-     * @param arg a {@code Integer} argument
-     * @return this {@code GwtTest} object
-     */
-    public final GwtTest<T> and(GwtFunctionWithArgument<Integer, T> gwtFunction, Integer arg) {
-        gwtFunction.apply(arg, context);
-        return this;
-    }
-
-    /**
-     * Invokes the given function on the given argument and context object.
-     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of an And clause attached
-     *                                       to a Given, When or Then
-     * @param arg a {@code Object} argument
-     * @return this {@code GwtTest} object
-     */
-    public final GwtTest<T> and(GwtFunctionWithArgument<Object, T> gwtFunction, Object arg) {
+    public final <V> GwtTest<T> and(GwtFunctionWithArgument<V, T> gwtFunction, V arg) {
         gwtFunction.apply(arg, context);
         return this;
     }

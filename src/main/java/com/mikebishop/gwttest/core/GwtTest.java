@@ -90,7 +90,7 @@ public class GwtTest<T extends Context> {
     /**
      * Invokes the given function on the given argument and context object.
      * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause. This function takes
-     *      *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
+     *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
      * @param arg an argument of type {@code V}
      * @return this {@code GwtTest} object
      */
@@ -113,7 +113,7 @@ public class GwtTest<T extends Context> {
     /**
      * Invokes the given function on the given argument and context object.
      * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Then clause. This function takes
-     *      *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
+     *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
      * @param arg an argument of type {@code V}
      * @return this {@code GwtTest} object
      */

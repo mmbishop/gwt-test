@@ -21,6 +21,7 @@ import com.mikebishop.gwttest.functions.GwtFunctionWithArgument;
 import com.mikebishop.gwttest.model.Context;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * The core class for building Given-When-Then tests.
@@ -46,6 +47,18 @@ public class GwtTest<T extends Context> {
     public GwtTest<T> test() {
         try {
             context = contextClass.getDeclaredConstructor().newInstance();
+            context.testName = getCallingMethodName();
+            return this;
+        }
+        catch (Exception e) {
+            throw new TestConstructionException("Can't construct test", e);
+        }
+    }
+
+    public GwtTest<T> test(String testName) {
+        try {
+            context = contextClass.getDeclaredConstructor().newInstance();
+            context.testName = testName;
             return this;
         }
         catch (Exception e) {
@@ -149,6 +162,15 @@ public class GwtTest<T extends Context> {
     @SafeVarargs
     private void invokeGwtFunctions(GwtFunction<T>... gwtFunctions) {
         Arrays.stream(gwtFunctions).forEach(f -> f.apply(context));
+    }
+
+    private String getCallingMethodName() {
+        StackWalker stackWalker = StackWalker.getInstance(StackWalker.Option.RETAIN_CLASS_REFERENCE);
+        Optional<String> callingMethodName = stackWalker.walk(frames -> frames
+                .skip(2) // first frame is this method, second frame is the method calling this method
+                .findFirst()
+                .map(StackWalker.StackFrame::getMethodName));
+        return callingMethodName.orElse("unknown");
     }
 
 }

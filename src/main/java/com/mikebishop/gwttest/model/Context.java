@@ -21,4 +21,7 @@ package com.mikebishop.gwttest.model;
  * to build the GWTTest object.
  */
 public class Context {
+
+    public String testName;
+
 }

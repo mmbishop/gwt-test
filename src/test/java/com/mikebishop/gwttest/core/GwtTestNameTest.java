@@ -29,7 +29,7 @@ public class GwtTestNameTest {
     private final GwtTest<NameTestContext> gwt = new GwtTest<>(NameTestContext.class);
 
     @Test
-    void calling_method_name_is_stored_in_context_as_test_name() {
+    void calling_method_name_is_stored_in_context_as_test_name_when_test_name_is_not_supplied() {
         gwt.test().then(calling_method_name_is_test_name);
     }
 
@@ -40,7 +40,7 @@ public class GwtTestNameTest {
     }
 
     private final GwtFunction<NameTestContext> calling_method_name_is_test_name = context ->
-            assertThat(context.testName, is("calling_method_name_is_stored_in_context_as_test_name"));
+            assertThat(context.testName, is("calling_method_name_is_stored_in_context_as_test_name_when_test_name_is_not_supplied"));
 
     private final GwtFunctionWithArgument<String, NameTestContext> test_name_is = (expectedTestName, context) ->
             assertThat(context.testName, is(expectedTestName));

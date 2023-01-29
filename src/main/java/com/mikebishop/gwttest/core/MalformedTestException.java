@@ -14,15 +14,12 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.model;
+package com.mikebishop.gwttest.core;
 
-/**
- * Top-level superclass for GWT test context classes. This class is extended in GWT test classes and is used
- * to build the GwtTest object.
- */
-public class Context {
+public class MalformedTestException extends RuntimeException {
 
-    public String testName;
-    public TestPhase testPhase;
+    public MalformedTestException(String message) {
+        super(message);
+    }
 
 }

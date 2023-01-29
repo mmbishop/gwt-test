@@ -19,6 +19,7 @@ package com.mikebishop.gwttest.core;
 import com.mikebishop.gwttest.functions.GwtFunction;
 import com.mikebishop.gwttest.functions.GwtFunctionWithArgument;
 import com.mikebishop.gwttest.model.Context;
+import com.mikebishop.gwttest.model.TestPhase;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -43,6 +44,8 @@ public class GwtTest<T extends Context> {
     /**
      * Initializes the {@code GwtTest} object
      * @return this {@code GwtTest} object
+     * @throws TestConstructionException could not construct the test, most likely due to an inability to
+     * instantiate the context class
      */
     public GwtTest<T> test() {
         try {
@@ -55,6 +58,13 @@ public class GwtTest<T extends Context> {
         }
     }
 
+    /**
+     * Initializes the {@code GwtTest} object
+     * @param testName the name of the test
+     * @return this {@code GwtTest} object
+     * @throws TestConstructionException could not construct the test, most likely due to an inability to
+     * instantiate the context class
+     */
     public GwtTest<T> test(String testName) {
         try {
             context = contextClass.getDeclaredConstructor().newInstance();
@@ -73,6 +83,8 @@ public class GwtTest<T extends Context> {
      */
     @SafeVarargs
     public final GwtTest<T> given(GwtFunction<T>... gwtFunctions) {
+        TestPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.GIVEN);
+        context.testPhase = TestPhase.GIVEN;
         invokeGwtFunctions(gwtFunctions);
         return this;
     }
@@ -85,6 +97,8 @@ public class GwtTest<T extends Context> {
      * @return this {@code GwtTest} object
      */
     public final <V> GwtTest<T> given(GwtFunctionWithArgument<V, T> gwtFunction, V arg) {
+        TestPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.GIVEN);
+        context.testPhase = TestPhase.GIVEN;
         gwtFunction.apply(arg, context);
         return this;
     }
@@ -96,6 +110,8 @@ public class GwtTest<T extends Context> {
      */
     @SafeVarargs
     public final GwtTest<T> when(GwtFunction<T>... gwtFunctions) {
+        TestPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.WHEN);
+        context.testPhase = TestPhase.WHEN;
         invokeGwtFunctions(gwtFunctions);
         return this;
     }
@@ -108,6 +124,8 @@ public class GwtTest<T extends Context> {
      * @return this {@code GwtTest} object
      */
     public final <V> GwtTest<T> when(GwtFunctionWithArgument<V, T> gwtFunction, V arg) {
+        TestPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.WHEN);
+        context.testPhase = TestPhase.WHEN;
         gwtFunction.apply(arg, context);
         return this;
     }
@@ -119,6 +137,8 @@ public class GwtTest<T extends Context> {
      */
     @SafeVarargs
     public final GwtTest<T> then(GwtFunction<T>... gwtFunctions) {
+        TestPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.THEN);
+        context.testPhase = TestPhase.THEN;
         invokeGwtFunctions(gwtFunctions);
         return this;
     }
@@ -131,6 +151,8 @@ public class GwtTest<T extends Context> {
      * @return this {@code GwtTest} object
      */
     public final <V> GwtTest<T> then(GwtFunctionWithArgument<V, T> gwtFunction, V arg) {
+        TestPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.THEN);
+        context.testPhase = TestPhase.THEN  ;
         gwtFunction.apply(arg, context);
         return this;
     }

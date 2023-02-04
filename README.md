@@ -12,7 +12,7 @@ example of a test scenario written in Gherkin is:
 **Given** A Customer  
 **And** A Product  
 **When** the Customer purchases the Product  
-**Then** an Invoice is created 
+**Then** an Invoice is created  
 **And** the Invoice is emailed to the Customer
 
 ## Writing tests using gwt-test
@@ -28,6 +28,7 @@ void customer_purchases_product_and_receives_invoice() {
         .when(the_customer_purchases_the_product)
         .then(an_invoice_is_created)
         .and(the_invoice_is_emailed_to_the_customer);
+}
 ```
 
 The test can also be written like this:
@@ -45,6 +46,7 @@ void customer_purchases_product_and_receives_invoice() {
             an_invoice_is_created,
             the_invoice_is_emailed_to_the_customer
         );
+}
 ```
 
 The identifiers are functions that are instances of ```GwtFunction``` if the function takes no arguments, or ```GwtFunctionWithArgument``` if the
@@ -72,6 +74,8 @@ private static class TestContext extends Context {
 ```
 
 When ```GwtTest```'s ```test``` method is called, the class you pass to the constructor (```TestContext``` in this example) is instantiated and the instance is passed to every 
-_given_, _when_ and _then_ function in your test method.
+_given_, _when_ and _then_ function in your test method. The base class ```Context``` contains some test metadata that may be useful, including the name of the test
+being executed, which is either the test method name if ```test``` is called with no arguments, or the name you send to ```test``` if you call it with a ```String```
+argument; and the current test phase (given, when or then).
 
 You can see examples of unit tests that are written with gwt-test in the [unit test package](src/test/java/com/mikebishop/gwttest/core).

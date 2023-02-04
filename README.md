@@ -8,7 +8,7 @@ gwt-test provides an easy-to-use framework for writing unit and integration test
 The Given-When-Then testing format is based on the [Gherkin](https://cucumber.io/docs/gherkin/) language for specifying test scenarios and business rules. An
 example of a test scenario written in Gherkin is:
 
-**Scenario**: Customer purchases Product and receives Invoice 
+**Scenario**: Customer purchases Product and receives Invoice   
 **Given** A Customer  
 **And** A Product  
 **When** the Customer purchases the Product  

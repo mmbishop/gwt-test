@@ -25,16 +25,16 @@ import java.util.Map;
 
 public class TestPhaseValidator {
 
-    private static Map<TestPhase, List<TestPhase>> testPhaseTransitionMap;
+    private final Map<TestPhase, List<TestPhase>> testPhaseTransitionMap;
 
-    static {
+    public TestPhaseValidator() {
         testPhaseTransitionMap = new HashMap<>();
         testPhaseTransitionMap.put(TestPhase.GIVEN, Collections.emptyList());
         testPhaseTransitionMap.put(TestPhase.WHEN, List.of(TestPhase.GIVEN));
         testPhaseTransitionMap.put(TestPhase.THEN, List.of(TestPhase.GIVEN, TestPhase.WHEN));
     }
 
-    static void validatePhaseTransition(TestPhase currentPhase, TestPhase nextPhase) {
+    void validatePhaseTransition(TestPhase currentPhase, TestPhase nextPhase) {
         if (currentPhase == null) {
             return;
         }

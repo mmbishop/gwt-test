@@ -49,8 +49,9 @@ void customer_purchases_product_and_receives_invoice() {
 }
 ```
 
-The identifiers are functions that are instances of ```GwtFunction``` if the function takes no arguments, or ```GwtFunctionWithArgument``` if the
-function takes one argument. For example, the _given_ function ```a_customer``` might look something like this:
+The identifiers passed to ```given```, ```when```, ```then``` and ```and``` are functions that are instances of ```GwtFunction``` if the function takes no 
+arguments, ```GwtFunctionWithArgument``` if the function takes one argument, or ```GwtFunctionWithArguments``` if the function takes more than one argument. 
+For example, the _given_ function ```a_customer``` might look something like this:
 
 ```
 private final GwtFunction<TestContext> a_customer = context -> context.customer = createCustomer();
@@ -63,10 +64,11 @@ private final GwtTest<TestContext> gwt = new GwtTest<>(TestContext.class);
 ```
 
 where ```TestContext``` is a class extending ```Context``` that you define in your test class. This class contains everything you need to run your unit tests.
-The name of this context class can be anything you want. We're using ```TestContext``` as an example. To support the above unit test, you might define that class as follows:
+The name of this context class can be anything you want. We're using ```TestContext``` as an example. The context class must be public so that gwt-test can
+instantiate it. To support the above unit test, you might define that class as follows:
 
 ```
-private static class TestContext extends Context {
+public static class TestContext extends Context {
     Customer customer;
     Invoice invoice;
     Product product;

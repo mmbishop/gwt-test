@@ -61,35 +61,35 @@ public class SimpleGwtWithArgumentTest {
     }
 
     private final GwtFunctionWithArgument<Double, TestContext> the_double_precision_number
-            = (arg, context) -> context.doubleArgument = arg;
+            = (context, arg) -> context.doubleArgument = arg;
 
-    private final GwtFunctionWithArgument<Integer, TestContext> the_integer = (arg, context) -> context.integerArgument = arg;
+    private final GwtFunctionWithArgument<Integer, TestContext> the_integer = (context, arg) -> context.integerArgument = arg;
 
-    private final GwtFunctionWithArgument<String, TestContext> the_string = (arg, context) -> context.stringArgument = arg;
+    private final GwtFunctionWithArgument<String, TestContext> the_string = (context, arg) -> context.stringArgument = arg;
 
-    private final GwtFunctionWithArgument<Point, TestContext> the_point = (point, context) -> context.pointArgument = point;
+    private final GwtFunctionWithArgument<Point, TestContext> the_point = (context, point) -> context.pointArgument = point;
 
     private final GwtFunction<TestContext> squaring_the_double_precision_number = context -> context.doubleResult = Math.pow(context.doubleArgument, 2.0);
 
     private final GwtFunction<TestContext> squaring_the_integer = context -> context.integerResult = (int) Math.pow((double) context.integerArgument, 2.0);
 
     private final GwtFunctionWithArgument<String, TestContext> concatenating_the_string
-            = (arg, context) -> context.stringResult = context.stringArgument + arg;
+            = (context, arg) -> context.stringResult = context.stringArgument + arg;
 
-    private final GwtFunctionWithArgument<Offset, TestContext> translating_the_point_by = (offset, context) -> {
+    private final GwtFunctionWithArgument<Offset, TestContext> translating_the_point_by = (context, offset) -> {
         context.pointResult = new Point(context.pointArgument.x() + offset.dx(), context.pointArgument.y() + offset.dy());
     };
 
     private final GwtFunctionWithArgument<Double, TestContext> the_double_precision_result_is
-            = (expectedResult, context) -> assertThat(context.doubleResult, is(expectedResult));
+            = (context, expectedResult) -> assertThat(context.doubleResult, is(expectedResult));
 
     private final GwtFunctionWithArgument<Integer, TestContext> the_integer_result_is
-            = (expectedResult, context) -> assertThat(context.integerResult, is(expectedResult));
+            = (context, expectedResult) -> assertThat(context.integerResult, is(expectedResult));
 
     private final GwtFunctionWithArgument<String, TestContext> the_resulting_string_is
-            = (expectedString, context) -> assertThat(context.stringResult, is(expectedString));
+            = (context, expectedString) -> assertThat(context.stringResult, is(expectedString));
 
-    private final GwtFunctionWithArgument<Point, TestContext> the_resulting_point_is = (expectedPoint, context) -> {
+    private final GwtFunctionWithArgument<Point, TestContext> the_resulting_point_is = (context, expectedPoint) -> {
         assertThat(context.pointResult.x(), is(expectedPoint.x()));
         assertThat(context.pointResult.y(), is(expectedPoint.y()));
     };

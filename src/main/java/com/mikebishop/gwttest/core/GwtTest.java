@@ -18,6 +18,7 @@ package com.mikebishop.gwttest.core;
 
 import com.mikebishop.gwttest.functions.GwtFunction;
 import com.mikebishop.gwttest.functions.GwtFunctionWithArgument;
+import com.mikebishop.gwttest.functions.GwtFunctionWithArguments;
 import com.mikebishop.gwttest.model.Context;
 import com.mikebishop.gwttest.model.TestPhase;
 
@@ -102,7 +103,22 @@ public class GwtTest<T extends Context> {
     public final <V> GwtTest<T> given(GwtFunctionWithArgument<V, T> gwtFunction, V arg) {
         testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.GIVEN);
         context.testPhase = TestPhase.GIVEN;
-        gwtFunction.apply(arg, context);
+        gwtFunction.apply(context, arg);
+        return this;
+    }
+
+    /**
+     * Invokes the given function on the given argument and context object.
+     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Given clause. This function takes
+     *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
+     * @param args arguments of type {@code V}
+     * @return this {@code GwtTest} object
+     */
+    @SafeVarargs
+    public final <V> GwtTest<T> given(GwtFunctionWithArguments<V, T> gwtFunction, V... args) {
+        testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.GIVEN);
+        context.testPhase = TestPhase.GIVEN;
+        gwtFunction.apply(context, args);
         return this;
     }
 
@@ -129,7 +145,22 @@ public class GwtTest<T extends Context> {
     public final <V> GwtTest<T> when(GwtFunctionWithArgument<V, T> gwtFunction, V arg) {
         testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.WHEN);
         context.testPhase = TestPhase.WHEN;
-        gwtFunction.apply(arg, context);
+        gwtFunction.apply(context, arg);
+        return this;
+    }
+
+    /**
+     * Invokes the given function on the given argument and context object.
+     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause. This function takes
+     *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
+     * @param args arguments of type {@code V}
+     * @return this {@code GwtTest} object
+     */
+    @SafeVarargs
+    public final <V> GwtTest<T> when(GwtFunctionWithArguments<V, T> gwtFunction, V... args) {
+        testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.WHEN);
+        context.testPhase = TestPhase.WHEN;
+        gwtFunction.apply(context, args);
         return this;
     }
 
@@ -156,7 +187,22 @@ public class GwtTest<T extends Context> {
     public final <V> GwtTest<T> then(GwtFunctionWithArgument<V, T> gwtFunction, V arg) {
         testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.THEN);
         context.testPhase = TestPhase.THEN  ;
-        gwtFunction.apply(arg, context);
+        gwtFunction.apply(context, arg);
+        return this;
+    }
+
+    /**
+     * Invokes the given function on the given argument and context object.
+     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Then clause. This function takes
+     *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
+     * @param args arguments of type {@code V}
+     * @return this {@code GwtTest} object
+     */
+    @SafeVarargs
+    public final <V> GwtTest<T> then(GwtFunctionWithArguments<V, T> gwtFunction, V... args) {
+        testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.THEN);
+        context.testPhase = TestPhase.THEN  ;
+        gwtFunction.apply(context, args);
         return this;
     }
 
@@ -180,8 +226,31 @@ public class GwtTest<T extends Context> {
      * @return this {@code GwtTest} object
      */
     public final <V> GwtTest<T> and(GwtFunctionWithArgument<V, T> gwtFunction, V arg) {
-        gwtFunction.apply(arg, context);
+        gwtFunction.apply(context, arg);
         return this;
+    }
+
+    /**
+     * Invokes the given function on the given argument and context object.
+     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of an And clause attached
+     *                                       to a Given, When or Then.  This function takes an argument of type {@code V}
+     *                                       and an instance of a subclass of {@link Context}.
+     * @param args arguments of type {@code V}
+     * @return this {@code GwtTest} object
+     */
+    @SafeVarargs
+    public final <V> GwtTest<T> and(GwtFunctionWithArguments<V, T> gwtFunction, V... args) {
+        gwtFunction.apply(context, args);
+        return this;
+    }
+
+    /**
+     * Pure syntactic sugar to help make {@code GwtFunctionWithArguments} functions easier to read in a unit test.
+     * @param arg an argument of type {@code V}
+     * @return the same argument that was passed in
+     */
+    public static <V> V and(V arg) {
+        return arg;
     }
 
     @SafeVarargs

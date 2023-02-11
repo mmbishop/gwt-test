@@ -26,7 +26,7 @@ import com.mikebishop.gwttest.model.Context;
  * @param <T> subclass of {@link Context} declared in the test class in which this function exists
  */
 @FunctionalInterface
-public interface GwtFunctionWithArgument<V, T extends Context> {
+public interface GwtFunctionWithArgument<T extends Context, V> {
 
     void apply(T context, V arg);
 

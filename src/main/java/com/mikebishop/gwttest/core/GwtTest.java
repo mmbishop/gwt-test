@@ -103,7 +103,7 @@ public class GwtTest<T extends Context> {
     public final <V> GwtTest<T> given(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
         testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.GIVEN);
         context.testPhase = TestPhase.GIVEN;
-        gwtFunction.apply(context, arg);
+        invokeGwtFunction(gwtFunction, arg);
         return this;
     }
 
@@ -118,7 +118,7 @@ public class GwtTest<T extends Context> {
     public final <V> GwtTest<T> given(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
         testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.GIVEN);
         context.testPhase = TestPhase.GIVEN;
-        gwtFunction.apply(context, args);
+        invokeGwtFunction(gwtFunction, args);
         return this;
     }
 
@@ -145,7 +145,7 @@ public class GwtTest<T extends Context> {
     public final <V> GwtTest<T> when(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
         testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.WHEN);
         context.testPhase = TestPhase.WHEN;
-        gwtFunction.apply(context, arg);
+        invokeGwtFunction(gwtFunction, arg);
         return this;
     }
 
@@ -160,7 +160,7 @@ public class GwtTest<T extends Context> {
     public final <V> GwtTest<T> when(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
         testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.WHEN);
         context.testPhase = TestPhase.WHEN;
-        gwtFunction.apply(context, args);
+        invokeGwtFunction(gwtFunction, args);
         return this;
     }
 
@@ -186,8 +186,8 @@ public class GwtTest<T extends Context> {
      */
     public final <V> GwtTest<T> then(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
         testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.THEN);
-        context.testPhase = TestPhase.THEN  ;
-        gwtFunction.apply(context, arg);
+        context.testPhase = TestPhase.THEN;
+        invokeGwtFunction(gwtFunction, arg);
         return this;
     }
 
@@ -201,8 +201,8 @@ public class GwtTest<T extends Context> {
     @SafeVarargs
     public final <V> GwtTest<T> then(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
         testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.THEN);
-        context.testPhase = TestPhase.THEN  ;
-        gwtFunction.apply(context, args);
+        context.testPhase = TestPhase.THEN;
+        invokeGwtFunction(gwtFunction, args);
         return this;
     }
 
@@ -213,7 +213,7 @@ public class GwtTest<T extends Context> {
      * @return this {@code GwtTest} object
      */
     public final GwtTest<T> and(GwtFunction<T> gwtFunction) {
-        gwtFunction.apply(context);
+        invokeGwtFunctions(gwtFunction);
         return this;
     }
 
@@ -226,7 +226,7 @@ public class GwtTest<T extends Context> {
      * @return this {@code GwtTest} object
      */
     public final <V> GwtTest<T> and(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
-        gwtFunction.apply(context, arg);
+        invokeGwtFunction(gwtFunction, arg);
         return this;
     }
 
@@ -240,7 +240,7 @@ public class GwtTest<T extends Context> {
      */
     @SafeVarargs
     public final <V> GwtTest<T> and(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
-        gwtFunction.apply(context, args);
+        invokeGwtFunction(gwtFunction, args);
         return this;
     }
 
@@ -253,9 +253,33 @@ public class GwtTest<T extends Context> {
         return arg;
     }
 
+    private <V> void invokeGwtFunction(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
+        try {
+            gwtFunction.apply(context, arg);
+        }
+        catch (Exception e) {
+            context.thrownException = e;
+        }
+    }
+
+    @SafeVarargs
+    private <V> void invokeGwtFunction(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
+        try {
+            gwtFunction.apply(context, args);
+        }
+        catch (Exception e) {
+            context.thrownException = e;
+        }
+    }
+
     @SafeVarargs
     private void invokeGwtFunctions(GwtFunction<T>... gwtFunctions) {
-        Arrays.stream(gwtFunctions).forEach(f -> f.apply(context));
+        try {
+            Arrays.stream(gwtFunctions).forEach(f -> f.apply(context));
+        }
+        catch (Exception e) {
+            context.thrownException = e;
+        }
     }
 
     private String getCallingMethodName() {

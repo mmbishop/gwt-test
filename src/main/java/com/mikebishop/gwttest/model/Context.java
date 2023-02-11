@@ -24,5 +24,6 @@ public class Context {
 
     public String testName;
     public TestPhase testPhase;
+    public Exception thrownException;
 
 }

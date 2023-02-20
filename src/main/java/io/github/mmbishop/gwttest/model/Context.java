@@ -14,18 +14,16 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.functions;
-
-import com.mikebishop.gwttest.model.Context;
+package io.github.mmbishop.gwttest.model;
 
 /**
- * A function that is invoked by the GWT {@code given}, {@code when}, {@code then} or
- * {@code and} method. An instance of a {@link Context} subclass is passed as the argument to the function.
- * @param <T> subclass of {@link Context} declared in the test class in which this function exists
+ * Top-level superclass for GWT test context classes. This class is extended in GWT test classes and is used
+ * to build the GwtTest object.
  */
-@FunctionalInterface
-public interface GwtFunction<T extends Context> {
+public class Context {
 
-    void apply(T context);
+    public String testName;
+    public TestPhase testPhase;
+    public Exception thrownException;
 
 }

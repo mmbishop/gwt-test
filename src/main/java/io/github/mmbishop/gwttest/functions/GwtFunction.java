@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.model;
+package io.github.mmbishop.gwttest.functions;
 
-public enum TestPhase {
+import io.github.mmbishop.gwttest.model.Context;
 
-    GIVEN,
-    WHEN,
-    THEN
+/**
+ * A function that is invoked by the GWT {@code given}, {@code when}, {@code then} or
+ * {@code and} method. An instance of a {@link Context} subclass is passed as the argument to the function.
+ * @param <T> subclass of {@link Context} declared in the test class in which this function exists
+ */
+@FunctionalInterface
+public interface GwtFunction<T extends Context> {
+
+    void apply(T context);
 
 }

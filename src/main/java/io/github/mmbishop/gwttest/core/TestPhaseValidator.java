@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.core;
+package io.github.mmbishop.gwttest.core;
 
-import com.mikebishop.gwttest.model.TestPhase;
+import io.github.mmbishop.gwttest.model.TestPhase;
 
 import java.util.Collections;
 import java.util.HashMap;

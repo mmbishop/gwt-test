@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.core;
+package io.github.mmbishop.gwttest.core;
 
-import com.mikebishop.gwttest.functions.GwtFunction;
-import com.mikebishop.gwttest.functions.GwtFunctionWithArgument;
-import com.mikebishop.gwttest.functions.GwtFunctionWithArguments;
-import com.mikebishop.gwttest.model.Context;
-import com.mikebishop.gwttest.model.TestPhase;
+import io.github.mmbishop.gwttest.functions.GwtFunction;
+import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
+import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
+import io.github.mmbishop.gwttest.model.Context;
+import io.github.mmbishop.gwttest.model.TestPhase;
 
 import java.util.Arrays;
 import java.util.Optional;

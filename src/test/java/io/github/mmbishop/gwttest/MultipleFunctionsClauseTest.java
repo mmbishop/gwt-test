@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.core;
+package io.github.mmbishop.gwttest;
 
-import com.mikebishop.gwttest.functions.GwtFunction;
-import com.mikebishop.gwttest.model.Context;
+import io.github.mmbishop.gwttest.core.GwtTest;
+import io.github.mmbishop.gwttest.functions.GwtFunction;
+import io.github.mmbishop.gwttest.model.Context;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -64,7 +65,7 @@ public class MultipleFunctionsClauseTest {
 
     private final GwtFunction<TestContext> the_remainder_is_calculated = context -> assertThat(context.remainder, is(3));
 
-    static class TestContext extends Context {
+    public static class TestContext extends Context {
         Integer number1;
         Integer number2;
         Integer product;

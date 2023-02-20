@@ -14,16 +14,12 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.model;
+package io.github.mmbishop.gwttest.model;
 
-/**
- * Top-level superclass for GWT test context classes. This class is extended in GWT test classes and is used
- * to build the GwtTest object.
- */
-public class Context {
+public enum TestPhase {
 
-    public String testName;
-    public TestPhase testPhase;
-    public Exception thrownException;
+    GIVEN,
+    WHEN,
+    THEN
 
 }

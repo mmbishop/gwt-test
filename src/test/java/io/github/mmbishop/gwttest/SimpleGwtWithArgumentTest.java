@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.core;
+package io.github.mmbishop.gwttest;
 
-import com.mikebishop.gwttest.functions.GwtFunction;
-import com.mikebishop.gwttest.functions.GwtFunctionWithArgument;
-import com.mikebishop.gwttest.model.Context;
+import io.github.mmbishop.gwttest.core.GwtTest;
+import io.github.mmbishop.gwttest.functions.GwtFunction;
+import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
+import io.github.mmbishop.gwttest.model.Context;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -94,7 +95,7 @@ public class SimpleGwtWithArgumentTest {
         assertThat(context.pointResult.y(), is(expectedPoint.y()));
     };
 
-    static class TestContext extends Context {
+    public static class TestContext extends Context {
         Double doubleArgument;
         Integer integerArgument;
         String stringArgument;

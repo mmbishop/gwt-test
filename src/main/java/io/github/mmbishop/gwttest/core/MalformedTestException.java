@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.core;
+package io.github.mmbishop.gwttest.core;
 
 public class MalformedTestException extends RuntimeException {
 

@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.core;
+package io.github.mmbishop.gwttest;
 
-import com.mikebishop.gwttest.functions.GwtFunction;
-import com.mikebishop.gwttest.model.Context;
+import io.github.mmbishop.gwttest.core.GwtTest;
+import io.github.mmbishop.gwttest.functions.GwtFunction;
+import io.github.mmbishop.gwttest.model.Context;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -41,7 +42,7 @@ public class SimpleGwtTest {
 
     private final GwtFunction<TestContext> the_result_is_the_number_times_itself = context -> assertThat(context.result, is(36.0));
 
-    static class TestContext extends Context {
+    public static class TestContext extends Context {
         Double number;
         Double result;
     }

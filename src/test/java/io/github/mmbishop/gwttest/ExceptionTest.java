@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.core;
+package io.github.mmbishop.gwttest;
 
-import com.mikebishop.gwttest.functions.GwtFunction;
-import com.mikebishop.gwttest.model.Context;
+import io.github.mmbishop.gwttest.core.GwtTest;
+import io.github.mmbishop.gwttest.functions.GwtFunction;
+import io.github.mmbishop.gwttest.model.Context;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -39,6 +40,6 @@ public class ExceptionTest {
 
     private final GwtFunction<ExceptionContext> an_exception_is_thrown = context -> assertNotNull(context.thrownException);
 
-    static class ExceptionContext extends Context {}
+    public static class ExceptionContext extends Context {}
 
 }

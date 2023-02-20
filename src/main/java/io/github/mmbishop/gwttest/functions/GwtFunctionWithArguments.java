@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.functions;
+package io.github.mmbishop.gwttest.functions;
 
-import com.mikebishop.gwttest.model.Context;
+import io.github.mmbishop.gwttest.model.Context;
 
 /**
  * A function that is invoked by the GWT {@code given}, {@code when}, {@code then} or
- * {@code and} method. This function takes two arguments: a value argument of type {@code V} and an
+ * {@code and} method. This function takes two arguments: a comma-separated list of value arguments of type {@code V} and an
  * instance of a {@link Context} subclass.
  * @param <V> value argument class
  * @param <T> subclass of {@link Context} declared in the test class in which this function exists
  */
 @FunctionalInterface
-public interface GwtFunctionWithArgument<T extends Context, V> {
+public interface GwtFunctionWithArguments<T extends Context, V> {
 
-    void apply(T context, V arg);
+    void apply(T context, V... args);
 
 }

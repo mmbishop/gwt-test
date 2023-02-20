@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.core;
+package io.github.mmbishop.gwttest;
 
-import com.mikebishop.gwttest.functions.GwtFunction;
-import com.mikebishop.gwttest.functions.GwtFunctionWithArgument;
-import com.mikebishop.gwttest.functions.GwtFunctionWithArguments;
-import com.mikebishop.gwttest.model.Context;
+import io.github.mmbishop.gwttest.core.GwtTest;
+import io.github.mmbishop.gwttest.functions.GwtFunction;
+import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
+import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
+import io.github.mmbishop.gwttest.model.Context;
 import org.junit.jupiter.api.Test;
 
-import static com.mikebishop.gwttest.core.GwtTest.and;
+import static io.github.mmbishop.gwttest.core.GwtTest.and;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -53,7 +54,7 @@ public class SimpleGwtWithArgumentsTest {
         assertThat(context.product, is(expectedResult));
     };
 
-    static class TestContext extends Context {
+    public static class TestContext extends Context {
         Integer[] numbers;
         Integer product;
     }

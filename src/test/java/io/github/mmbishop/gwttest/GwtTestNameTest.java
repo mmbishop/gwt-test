@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package com.mikebishop.gwttest.core;
+package io.github.mmbishop.gwttest;
 
-import com.mikebishop.gwttest.functions.GwtFunction;
-import com.mikebishop.gwttest.functions.GwtFunctionWithArgument;
-import com.mikebishop.gwttest.model.Context;
+import io.github.mmbishop.gwttest.core.GwtTest;
+import io.github.mmbishop.gwttest.functions.GwtFunction;
+import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
+import io.github.mmbishop.gwttest.model.Context;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -45,6 +46,6 @@ public class GwtTestNameTest {
     private final GwtFunctionWithArgument<NameTestContext, String> test_name_is = (context, expectedTestName) ->
             assertThat(context.testName, is(expectedTestName));
 
-    static class NameTestContext extends Context { }
+    public static class NameTestContext extends Context { }
 
 }

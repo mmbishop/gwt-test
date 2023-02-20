@@ -16,6 +16,10 @@
 
 package io.github.mmbishop.gwttest.core;
 
+/**
+ * An exception that is thrown when a GWT test can't be constructed. This typically happens when a test's
+ * context class is not public and thus is not accessible to instantiate.
+ */
 public class TestConstructionException extends RuntimeException {
 
     public TestConstructionException(String message, Throwable cause) {

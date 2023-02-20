@@ -23,6 +23,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Validates test phase transitions.
+ */
 public class TestPhaseValidator {
 
     private final Map<TestPhase, List<TestPhase>> testPhaseTransitionMap;

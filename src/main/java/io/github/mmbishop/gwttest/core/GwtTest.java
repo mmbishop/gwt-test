@@ -244,15 +244,6 @@ public class GwtTest<T extends Context> {
         return this;
     }
 
-    /**
-     * Pure syntactic sugar to help make {@code GwtFunctionWithArguments} functions easier to read in a unit test.
-     * @param arg an argument of type {@code V}
-     * @return the same argument that was passed in
-     */
-    public static <V> V and(V arg) {
-        return arg;
-    }
-
     private <V> void invokeGwtFunction(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
         try {
             gwtFunction.apply(context, arg);

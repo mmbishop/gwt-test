@@ -23,7 +23,6 @@ import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
 import io.github.mmbishop.gwttest.model.Context;
 import org.junit.jupiter.api.Test;
 
-import static io.github.mmbishop.gwttest.core.GwtTest.and;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -34,7 +33,7 @@ public class SimpleGwtWithArgumentsTest {
     @Test
     void multiple_arguments_test() {
         gwt.test()
-                .given(numbers, 2, 3, and(4))
+                .given(numbers, 2, 3, 4)
                 .when(multiplying_the_numbers_together)
                 .then(the_calculated_product_is, 24);
     }

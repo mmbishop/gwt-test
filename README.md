@@ -199,17 +199,23 @@ public class DivisionTest {
                 .then(the_quotient_is_infinity);
     }
 
-    private final GwtFunctionWithArgument<TestContext, Double> a_dividend = (context, dividend) -> context.dividend = dividend;
+    private final GwtFunctionWithArgument<TestContext, Double> a_dividend  
+            = (context, dividend) -> context.dividend = dividend;
 
-    private final GwtFunctionWithArgument<TestContext, Double> a_divisor = (context, divisor) -> context.divisor = divisor;
+    private final GwtFunctionWithArgument<TestContext, Double> a_divisor  
+            = (context, divisor) -> context.divisor = divisor;
 
-    private final GwtFunction<TestContext> dividing_the_dividend_by_the_divisor = context -> context.quotient = context.dividend / context.divisor;
+    private final GwtFunction<TestContext> dividing_the_dividend_by_the_divisor  
+            = context -> context.quotient = context.dividend / context.divisor;
     
-    private final GwtFunction<TestContext> dividing_the_dividend_by_zero = context -> context.quotient = context.dividend / 0.0;
+    private final GwtFunction<TestContext> dividing_the_dividend_by_zero  
+            = context -> context.quotient = context.dividend / 0.0;
 
-    private final GwtFunctionWithArgument<TestContext, Double> the_quotient_is = (context, expectedQuotient) -> assertThat(context.quotient, is(expectedQuotient));
+    private final GwtFunctionWithArgument<TestContext, Double> the_quotient_is  
+            = (context, expectedQuotient) -> assertThat(context.quotient, is(expectedQuotient));
     
-    private final GwtFunction<TestContext> the_quotient_is_infinity = context -> assertThat(context.quotient, is(Double.POSITIVE_INFINITY));
+    private final GwtFunction<TestContext> the_quotient_is_infinity  
+            = context -> assertThat(context.quotient, is(Double.POSITIVE_INFINITY));
 
     public static final class TestContext extends Context {
         Double dividend;

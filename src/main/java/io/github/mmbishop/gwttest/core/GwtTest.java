@@ -53,6 +53,7 @@ public class GwtTest<T extends Context> {
         try {
             context = contextClass.getDeclaredConstructor().newInstance();
             context.testName = getCallingMethodName();
+            context.testPhase = null;
             testPhaseValidator = new TestPhaseValidator();
             return this;
         }
@@ -72,6 +73,7 @@ public class GwtTest<T extends Context> {
         try {
             context = contextClass.getDeclaredConstructor().newInstance();
             context.testName = testName;
+            context.testPhase = null;
             testPhaseValidator = new TestPhaseValidator();
             return this;
         }
@@ -213,6 +215,7 @@ public class GwtTest<T extends Context> {
      * @return this {@code GwtTest} object
      */
     public final GwtTest<T> and(GwtFunction<T> gwtFunction) {
+        testPhaseValidator.validateSelfTransition(context.testPhase);
         invokeGwtFunctions(gwtFunction);
         return this;
     }
@@ -226,6 +229,7 @@ public class GwtTest<T extends Context> {
      * @return this {@code GwtTest} object
      */
     public final <V> GwtTest<T> and(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
+        testPhaseValidator.validateSelfTransition(context.testPhase);
         invokeGwtFunction(gwtFunction, arg);
         return this;
     }
@@ -240,6 +244,7 @@ public class GwtTest<T extends Context> {
      */
     @SafeVarargs
     public final <V> GwtTest<T> and(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
+        testPhaseValidator.validateSelfTransition(context.testPhase);
         invokeGwtFunction(gwtFunction, args);
         return this;
     }

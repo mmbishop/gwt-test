@@ -41,7 +41,7 @@ public class PhaseTransitionTest {
     }
 
     @Test
-    void test_fails_when_phases_are_not_called_in_the_correct_order() {
+    void test_is_malformed_when_phases_are_not_called_in_the_correct_order() {
         try {
             gwt.test()
                     .when(squaring_the_number)
@@ -57,13 +57,64 @@ public class PhaseTransitionTest {
     }
 
     @Test
-    void test_fails_when_phase_is_called_multiple_times() {
+    void test_is_malformed_when_GIVEN_is_called_multiple_times() {
         try {
             gwt.test()
                     .given(a_number)
                     .given(a_number)
                     .when(squaring_the_number)
                     .then(the_result_is_the_number_times_itself);
+        }
+        catch (MalformedTestException e) {
+            thrownException = e;
+        }
+        finally {
+            assertThat(thrownException, is(not(nullValue())));
+        }
+    }
+
+    @Test
+    void test_is_malformed_when_WHEN_is_called_multiple_times() {
+        try {
+            gwt.test()
+                    .given(a_number)
+                    .when(squaring_the_number)
+                    .when(squaring_the_number)
+                    .then(the_result_is_the_number_times_itself);
+        }
+        catch (MalformedTestException e) {
+            thrownException = e;
+        }
+        finally {
+            assertThat(thrownException, is(not(nullValue())));
+        }
+    }
+
+    @Test
+    void test_is_malformed_when_THEN_is_called_multiple_times() {
+        try {
+            gwt.test()
+                    .given(a_number)
+                    .when(squaring_the_number)
+                    .then(the_result_is_the_number_times_itself)
+                    .then(the_result_is_the_number_times_itself);
+        }
+        catch (MalformedTestException e) {
+            thrownException = e;
+        }
+        finally {
+            assertThat(thrownException, is(not(nullValue())));
+        }
+    }
+
+    @Test
+    void test_is_malformed_when_AND_is_called_first() {
+        try {
+            gwt.test()
+                    .and(a_number)
+                    .given(a_number)
+                    .when(squaring_the_number)
+                    .then(the_result_is_the_number_times_itself);;
         }
         catch (MalformedTestException e) {
             thrownException = e;

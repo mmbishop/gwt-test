@@ -37,6 +37,12 @@ public class TestPhaseValidator {
         testPhaseTransitionMap.put(TestPhase.THEN, List.of(TestPhase.GIVEN, TestPhase.WHEN));
     }
 
+    /**
+     * Validates a phase transition in a GwtTest.
+     * @param currentPhase the current phase the test is in
+     * @param nextPhase the next phase the test will be in based on which method (.given, .when or .then) is being called
+     * @throws MalformedTestException the phase transition is invalid
+     */
     void validatePhaseTransition(TestPhase currentPhase, TestPhase nextPhase) {
         if (currentPhase == null) {
             return;
@@ -44,6 +50,17 @@ public class TestPhaseValidator {
         var validCurrentPhases = testPhaseTransitionMap.get(nextPhase);
         if (!validCurrentPhases.contains(currentPhase)) {
             throw new MalformedTestException("Invalid test phase transition from " + currentPhase + " to " + nextPhase);
+        }
+    }
+
+    /**
+     * Validates a self transition in a GwtTest. This occurs when the .and method is called.
+     * @param currentPhase the current phase the test is in
+     * @throws MalformedTestException there is no current phase, meaning that .and was called before .given, .when or .then
+     */
+    void validateSelfTransition(TestPhase currentPhase) {
+        if (currentPhase == null) {
+            throw new MalformedTestException(".and called before .given, .when and .then");
         }
     }
 

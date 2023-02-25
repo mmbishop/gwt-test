@@ -226,10 +226,10 @@ public class DivisionTest {
 ```
 
 Note: The JUnit and Hamcrest dependencies supporting the imports in the example are test-scoped in the gwt-test library, so you won't get them as 
-transitive dependencies. They are not required (though JUnit will almost certainly be needed), so if you want those dependencies you will need to declare them 
+transitive dependencies. They are not required (though JUnit will almost certainly be needed), but if you want those dependencies you will need to declare them 
 in your project. Hamcrest is recommended as its matcher methods are very useful for writing assertions.
 
-## Why snake case?
+### Why snake case?
 
 You've noticed that the test method and function names are specified using snake case. You don't have to use snake case; camel case is perfectly fine. I use
 snake case in my test classes because it's possible (though probably unlikely) that I may need to ask a domain expert or business analyst to look at a test

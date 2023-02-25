@@ -56,6 +56,23 @@ public class PhaseTransitionTest {
         }
     }
 
+    @Test
+    void test_fails_when_phase_is_called_multiple_times() {
+        try {
+            gwt.test()
+                    .given(a_number)
+                    .given(a_number)
+                    .when(squaring_the_number)
+                    .then(the_result_is_the_number_times_itself);
+        }
+        catch (MalformedTestException e) {
+            thrownException = e;
+        }
+        finally {
+            assertThat(thrownException, is(not(nullValue())));
+        }
+    }
+
     private final GwtFunction<PhaseTransitionTestContext> a_number = context -> context.number = 7;
 
     private final GwtFunction<PhaseTransitionTestContext> squaring_the_number = context -> context.result = context.number * context.number;

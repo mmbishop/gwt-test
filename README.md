@@ -4,6 +4,26 @@ Given-When-Then testing framework for Java
 ## Overview
 gwt-test provides an easy-to-use framework for writing unit and integration tests in the Given-When-Then format.
 
+## How to Use
+To use gwt-test, include it as a dependency as follows:
+
+**Maven**
+```
+<dependency>
+    <groupId>io.github.mmbishop</groupId>
+    <artifactId>gwt-test</artifactId>
+    <version>1.0.0</version>
+    <scope>test</scope>
+</dependency>
+```
+
+**Gradle**
+```
+testImplementation 'io.github.mmbishop:gwt-test:1.0.0'
+```
+
+gwt-test requires Java 17 or later.
+
 ## Background
 The Given-When-Then testing format is based on the [Gherkin](https://cucumber.io/docs/gherkin/) language for specifying test scenarios and business rules. An
 example of a test scenario written in Gherkin is:

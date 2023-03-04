@@ -15,13 +15,13 @@ example of a test scenario written in Gherkin is:
 **Then** an Invoice is created  
 **And** the Invoice is emailed to the Customer
 
-Writing unit and integration tests in the Given-When-Then format provides several advantages over the tradition Arrange-Act-Assert approach, including:
+Writing unit and integration tests in the Given-When-Then format provides several advantages over the traditional Arrange-Act-Assert approach, including:
 
 * Tests focus on the behavior of the system under test rather than on the mechanics of the underlying code.
-* A reduced coupling of tests to implementation, so that changes to implementation don't often require a change to tests. An implementation change to improve performance
+* A reduced coupling of tests to implementation, so that changes to the implementation don't often require a change to tests. An implementation change to improve performance
 or fix a bug isn't changing the required behavior of the code, so the tests shouldn't change.
-* The test code is mode modular, leading to code reuse.
-* The tests read like acceptance criteria, which can facilitate more conversation between different stakeholders such as developers, QA, product owners and business users.
+* The test code is more modular, leading to code reuse.
+* The tests read like acceptance criteria, which can facilitate more conversations between different stakeholders such as developers, QA, product owners and business users.
 
 ## Writing tests using gwt-test
 
@@ -232,7 +232,7 @@ in your project. Hamcrest is recommended as its matcher methods are very useful 
 ### Why snake case?
 
 You've noticed that the test method and function names are specified using snake case. You don't have to use snake case; camel case is perfectly fine. I use
-snake case in my test classes because it's possible (though probably unlikely) that I may need to ask a domain expert or business analyst to look at a test
+snake case in my test classes because it's possible that I may need to ask a domain expert or business analyst to look at a test
 to make sure I'm covering all of the cases. They are much more likely to want to read snake case than camel case. All I would ask them to read is the test
 methods (those annotated with @Test). Any other supporting methods I write will be named using camel case since only developers will be looking at that code.
 

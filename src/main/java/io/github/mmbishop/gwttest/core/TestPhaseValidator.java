@@ -33,7 +33,7 @@ public class TestPhaseValidator {
     public TestPhaseValidator() {
         testPhaseTransitionMap = new HashMap<>();
         testPhaseTransitionMap.put(TestPhase.GIVEN, Collections.emptyList());
-        testPhaseTransitionMap.put(TestPhase.WHEN, List.of(TestPhase.GIVEN));
+        testPhaseTransitionMap.put(TestPhase.WHEN, List.of(TestPhase.GIVEN, TestPhase.THEN));
         testPhaseTransitionMap.put(TestPhase.THEN, List.of(TestPhase.GIVEN, TestPhase.WHEN));
     }
 

@@ -32,9 +32,10 @@ public class TestPhaseValidator {
 
     public TestPhaseValidator() {
         testPhaseTransitionMap = new HashMap<>();
-        testPhaseTransitionMap.put(TestPhase.GIVEN, Collections.emptyList());
-        testPhaseTransitionMap.put(TestPhase.WHEN, List.of(TestPhase.GIVEN, TestPhase.THEN));
-        testPhaseTransitionMap.put(TestPhase.THEN, List.of(TestPhase.GIVEN, TestPhase.WHEN));
+        testPhaseTransitionMap.put(TestPhase.CONSTRUCTED, Collections.emptyList());
+        testPhaseTransitionMap.put(TestPhase.GIVEN, List.of(TestPhase.CONSTRUCTED));
+        testPhaseTransitionMap.put(TestPhase.WHEN, List.of(TestPhase.CONSTRUCTED, TestPhase.GIVEN, TestPhase.THEN));
+        testPhaseTransitionMap.put(TestPhase.THEN, List.of(TestPhase.CONSTRUCTED, TestPhase.GIVEN, TestPhase.WHEN));
     }
 
     /**
@@ -59,7 +60,7 @@ public class TestPhaseValidator {
      * @throws MalformedTestException there is no current phase, meaning that .and was called before .given, .when or .then
      */
     void validateSelfTransition(TestPhase currentPhase) {
-        if (currentPhase == null) {
+        if (currentPhase == null || currentPhase.equals(TestPhase.CONSTRUCTED)) {
             throw new MalformedTestException(".and called before .given, .when and .then");
         }
     }

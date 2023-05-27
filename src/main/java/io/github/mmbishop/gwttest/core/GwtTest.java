@@ -31,6 +31,7 @@ import java.util.Optional;
  */
 public class GwtTest<T extends Context> {
 
+    private TestPhase testPhase;
     private TestPhaseValidator testPhaseValidator;
     private final Class<T> contextClass;
     private T context;
@@ -50,16 +51,19 @@ public class GwtTest<T extends Context> {
      * instantiate the context class
      */
     public GwtTest<T> test() {
-        try {
-            context = contextClass.getDeclaredConstructor().newInstance();
-            context.testName = getCallingMethodName();
-            context.testPhase = null;
-            testPhaseValidator = new TestPhaseValidator();
-            return this;
+        if (testPhase == null) {
+            try {
+                context = contextClass.getDeclaredConstructor().newInstance();
+                context.testName = getCallingMethodName();
+                testPhase = TestPhase.CONSTRUCTED;
+                testPhaseValidator = new TestPhaseValidator();
+                return this;
+            }
+            catch (Exception e) {
+                throw new TestConstructionException("Can't construct test", e);
+            }
         }
-        catch (Exception e) {
-            throw new TestConstructionException("Can't construct test", e);
-        }
+        throw new MalformedTestException("Can't call test() more than once.");
     }
 
     /**
@@ -70,16 +74,19 @@ public class GwtTest<T extends Context> {
      * instantiate the context class
      */
     public GwtTest<T> test(String testName) {
-        try {
-            context = contextClass.getDeclaredConstructor().newInstance();
-            context.testName = testName;
-            context.testPhase = null;
-            testPhaseValidator = new TestPhaseValidator();
-            return this;
+        if (testPhase == null) {
+            try {
+                context = contextClass.getDeclaredConstructor().newInstance();
+                context.testName = testName;
+                testPhase = TestPhase.CONSTRUCTED;
+                testPhaseValidator = new TestPhaseValidator();
+                return this;
+            }
+            catch (Exception e) {
+                throw new TestConstructionException("Can't construct test", e);
+            }
         }
-        catch (Exception e) {
-            throw new TestConstructionException("Can't construct test", e);
-        }
+        throw new MalformedTestException("Can't call test() more than once.");
     }
 
     /**

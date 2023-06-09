@@ -17,6 +17,7 @@
 package io.github.mmbishop.gwttest;
 
 import io.github.mmbishop.gwttest.core.GwtTest;
+import io.github.mmbishop.gwttest.core.MalformedTestException;
 import io.github.mmbishop.gwttest.functions.GwtFunction;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
@@ -24,7 +25,9 @@ import io.github.mmbishop.gwttest.model.Context;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.not;
 
 public class MultipleTestCasesTest {
 
@@ -37,6 +40,42 @@ public class MultipleTestCasesTest {
                 .when(dividing_the_numbers)
                 .then(the_quotient_is, 3);
     }
+
+    @Test
+    void test_is_malformed_when_test_case_has_WHEN_without_THEN() {
+        try {
+            gwt.test()
+                    .given(numbers, 12, 4)
+                    .when(multiplying_the_numbers)
+                    .when(dividing_the_numbers)
+                    .then(the_quotient_is, 3);
+        }
+        catch (MalformedTestException e) {
+            thrownException = e;
+        }
+        finally {
+            assertThat(thrownException, is(not(nullValue())));
+        }
+    }
+
+    @Test
+    void test_is_malformed_when_test_case_has_THEN_without_WHEN() {
+        try {
+            gwt.test()
+                    .given(numbers, 12, 4)
+                    .when(multiplying_the_numbers)
+                    .then(the_product_is, 48)
+                    .then(the_quotient_is, 3);
+        }
+        catch (MalformedTestException e) {
+            thrownException = e;
+        }
+        finally {
+            assertThat(thrownException, is(not(nullValue())));
+        }
+    }
+
+    private MalformedTestException thrownException;
 
     private final GwtTest<MultipleCasesTestContext> gwt = new GwtTest<>(MultipleCasesTestContext.class);
 

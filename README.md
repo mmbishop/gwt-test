@@ -173,6 +173,22 @@ void product_of_multiple_numbers_is_calculated() {
 }
 ```
 
+### Multiple related cases in a test
+
+You can have multiple when-then clauses in a single test:
+
+```
+@Test
+void numbers_can_be_multiplied_and_divided() {
+    gwt.test()
+            .given(the_numbers, 12, 4)
+            .when(multiplying_the_numbers)
+            .then(the_product_is, 48)
+            .when(dividing_the_numbers)
+            .then(the_quotient_is, 3);
+}
+```
+
 #### Exception handling
 
 The base [Context](src/main/java/io/github/mmbishop/gwttest/model/Context.java) class has a property called ```thrownException``` that stores any exception that is

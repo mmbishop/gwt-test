@@ -18,6 +18,7 @@ package io.github.mmbishop.gwttest.model;
 
 public enum TestPhase {
 
+    CONSTRUCTED,
     GIVEN,
     WHEN,
     THEN

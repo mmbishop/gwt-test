@@ -16,10 +16,19 @@
 
 package io.github.mmbishop.gwttest
 
+import io.github.mmbishop.gwttest.ScalaGwtTestWrapperTest.TestContext
 import io.github.mmbishop.gwttest.core.ScalaGwtTest
 import io.github.mmbishop.gwttest.functions.GwtFunction
 import io.github.mmbishop.gwttest.model.Context
 import org.junit.jupiter.api.Test
+
+object ScalaGwtTestWrapperTest {
+  class TestContext extends Context {
+    var number1: Int = 0
+    var number2: Int = 0
+    var result: Int = 0
+  }
+}
 
 class ScalaGwtTestWrapperTest {
 
@@ -41,15 +50,5 @@ class ScalaGwtTestWrapperTest {
   private val multiplying_the_numbers: GwtFunction[TestContext] = context => context.result = context.number1 * context.number2
 
   private val the_product_is_calculated: GwtFunction[TestContext] = context => assert(context.result == 15)
-
-  class TestContext(
-    var number1: Int,
-    var number2: Int,
-    var result: Int
-  ) extends Context {
-    def this() = {
-      this(0, 0, 0)
-    }
-  }
 
 }

@@ -6,7 +6,7 @@
 
     <groupId>io.github.mmbishop</groupId>
     <artifactId>gwt-test</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0</version>
     <packaging>jar</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
@@ -152,12 +152,16 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>default-compile</id>
-                        <phase>none</phase>
+                        <id>java-compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
                     </execution>
                     <execution>
-                        <id>default-testCompile</id>
-                        <phase>none</phase>
+                        <id>java-test-compile</id>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -165,11 +169,17 @@
                 <groupId>net.alchim31.maven</groupId>
                 <artifactId>scala-maven-plugin</artifactId>
                 <version>4.8.1</version>
+                <configuration>
+                    <recompileMode>incremental</recompileMode>
+                    <compileOrder>JavaThenScala</compileOrder>
+                    <source>17</source>
+                    <target>17</target>
+                    <scalaVersion>3.3.0</scalaVersion>
+                </configuration>
                 <executions>
                     <execution>
                         <id>scala-compile</id>
                         <goals>
-                            <goal>add-source</goal>
                             <goal>compile</goal>
                         </goals>
                     </execution>
@@ -177,6 +187,12 @@
                         <id>scala-test-compile</id>
                         <goals>
                             <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>scala-resources</id>
+                        <goals>
+                            <goal>compile</goal>
                         </goals>
                     </execution>
                 </executions>

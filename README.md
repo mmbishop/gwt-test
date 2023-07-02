@@ -1,5 +1,5 @@
 # gwt-test
-Given-When-Then testing framework for Java
+Given-When-Then testing framework for Java, with support for Groovy and Scala
 
 ## Overview
 gwt-test provides an easy-to-use framework for writing unit and integration tests in the Given-When-Then format.
@@ -12,17 +12,27 @@ To use gwt-test, include it as a dependency as follows:
 <dependency>
     <groupId>io.github.mmbishop</groupId>
     <artifactId>gwt-test</artifactId>
-    <version>1.0.0</version>
+    <version>1.2.0</version>
     <scope>test</scope>
 </dependency>
 ```
 
 **Gradle**
 ```
-testImplementation 'io.github.mmbishop:gwt-test:1.0.0'
+testImplementation 'io.github.mmbishop:gwt-test:1.2.0'
 ```
 
-gwt-test requires Java 17 or later.
+**sbt**
+```
+"io.github.mmbishop" % "gwt-test" % "1.2.0" % Test
+```
+
+## Language Support
+| Language | Version |
+| -------- | ------- |
+| Java     | 17+     |
+| Groovy   | 3+      |
+| Scala    | 3       |
 
 ## Background
 The Given-When-Then testing format is based on the [Gherkin](https://cucumber.io/docs/gherkin/) language for specifying test scenarios and business rules. An
@@ -271,6 +281,38 @@ You've noticed that the test method and function names are specified using snake
 snake case in my test classes because it's possible that I may need to ask a domain expert or business analyst to look at a test
 to make sure I'm covering all of the cases. They are much more likely to want to read snake case than camel case. All I would ask them to read is the test
 methods (those annotated with @Test). Any other supporting methods I write will be named using camel case since only developers will be looking at that code.
+
+## Groovy Notes
+
+Using gwt-test in Groovy is almost exactly the same as using it in Java. There are only a couple of significant differences:
+
+1. ```public``` is the default scope, so the context class can be declared as a ```static class```
+
+2. Groovy's Lambda syntax is a little different than Java's. The function implementations must be enclosed in curly braces, and the arguments go inside the curly braces. 
+For example, the function implementation 
+
+```
+context -> assertThat(context.quotient, is(Double.POSITIVE_INFINITY));
+```
+
+in Java looks like this in Groovy:
+
+```
+{ context -> assertThat(context.quotient, is(Double.POSITIVE_INFINITY)) }
+```
+
+## Scala Notes
+
+There are several significant differences in the use of gwt-test in Scala compared to Java and Groovy:
+
+1. The context class is declared inside of an ```object``` at the top of the test class, and the test implementation is contained in the companion class.
+2. In Scala, ```given``` and ```then``` are reserved words and cannot be used as method names. To use gwt-test in Scala, you declared a test object of type
+   ```ScalaGwtTest```, which is a wrapper class. The method names begin with uppercase letters to avoid conflicting with the reserved words. Thus, the GWT
+   method names are ```Given```, ```When```, ```Then``` and ```And```.
+3. When instantiating the test object, the type argument is specified as ```classOf[class-name]``` so that the Java framework can instantiate it.
+4. Test methods return ```Unit```, which is the Scala equivalent of the Java ```void``` method.
+
+See the [ScalaGwtTestWrapperTest](src/test/scala/io/github/mmbishop/gwttest/ScalaGwtTestWrapperTest.scala) class for an example of using gwt-test in Scala.
 
 ## Examples
 

@@ -1,6 +1,18 @@
 # gwt-test
 Given-When-Then testing framework for Java, with support for Groovy and Scala
 
+## Table of Contents
+
+[Overview](#overview)  
+[How to use](#how-to-use)  
+[Language Support](#language-support)  
+[Background](#background)  
+[Writing tests using gwt-test](#writing-tests-using-gwt-test)  
+[Elements of gwt-test](#elements-of-gwt-test)  
+[An example test class using gwt-test](#an-example-test-class-using-gwt-test)  
+[Groovy Notes](#groovy-notes)  
+[Scala Notes](#scala-notes)
+
 ## Overview
 gwt-test provides an easy-to-use framework for writing unit and integration tests in the Given-When-Then format.
 
@@ -28,11 +40,11 @@ testImplementation 'io.github.mmbishop:gwt-test:1.2.0'
 ```
 
 ## Language Support
-| Language | Version                 |
-| -------- |-------------------------|
-| Java     | 17+                     |
-| Groovy   | 3+                      |
-| Scala    | 3.0+, 2.13.6+, 2.12.15+ |
+| Language | Version                       |
+| -------- |-------------------------------|
+| Java     | [17,)                         |
+| Groovy   | [3,)                          |
+| Scala    | [3.0,), [2.13.6,), [2.12.15,) |
 
 ## Background
 The Given-When-Then testing format is based on the [Gherkin](https://cucumber.io/docs/gherkin/) language for specifying test scenarios and business rules. An
@@ -306,11 +318,13 @@ looks like this in Groovy:
 There are several significant differences in the use of gwt-test in Scala compared to Java and Groovy:
 
 1. The context class is declared inside of an ```object``` at the top of the test class, and the test implementation is contained in the companion class.
-2. In Scala, ```given``` and ```then``` are reserved words and cannot be used as method names. To use gwt-test in Scala, you declare a test object of type
+2. Fields in the context class must be ```var```s and must be explicitly initialized. You can use the default value constant ```_``` for this purpose, as in
+   ```var field = _```.
+3. In Scala, ```given``` and ```then``` are reserved words and cannot be used as method names. To use gwt-test in Scala, you declare a test object of type
    ```ScalaGwtTest```, which is a wrapper class. The method names begin with uppercase letters to avoid conflicting with the reserved words. Thus, the GWT
    method names are ```Given```, ```When```, ```Then``` and ```And```.
-3. When instantiating the test object, the type argument is specified as ```classOf[class-name]``` so that the Java framework can instantiate it.
-4. Test methods return ```Unit```, which is the Scala equivalent of the Java ```void``` method.
+4. When instantiating the test object, the type argument is specified as ```classOf[class-name]``` so that the Java framework can instantiate it.
+5. Test methods return ```Unit```, which is the Scala equivalent of the Java ```void``` method.
 
 See the [ScalaGwtTestWrapperTest](src/test/scala/io/github/mmbishop/gwttest/ScalaGwtTestWrapperTest.scala) class for an example of using gwt-test in Scala.
 

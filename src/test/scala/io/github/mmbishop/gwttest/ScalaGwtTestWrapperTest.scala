@@ -24,9 +24,9 @@ import org.junit.jupiter.api.Test
 
 object ScalaGwtTestWrapperTest {
   class TestContext extends Context {
-    var number1: Int = 0
-    var number2: Int = 0
-    var result: Int = 0
+    var number1: Int = _
+    var number2: Int = _
+    var result: Int = _
   }
 }
 

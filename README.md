@@ -28,11 +28,11 @@ testImplementation 'io.github.mmbishop:gwt-test:1.2.0'
 ```
 
 ## Language Support
-| Language | Version |
-| -------- | ------- |
-| Java     | 17+     |
-| Groovy   | 3+      |
-| Scala    | 3       |
+| Language | Version                 |
+| -------- |-------------------------|
+| Java     | 17+                     |
+| Groovy   | 3+                      |
+| Scala    | 3.0+, 2.13.6+, 2.12.15+ |
 
 ## Background
 The Given-When-Then testing format is based on the [Gherkin](https://cucumber.io/docs/gherkin/) language for specifying test scenarios and business rules. An
@@ -289,13 +289,13 @@ Using gwt-test in Groovy is almost exactly the same as using it in Java. There a
 1. ```public``` is the default scope, so the context class can be declared as a ```static class```
 
 2. Groovy's Lambda syntax is a little different than Java's. The function implementations must be enclosed in curly braces, and the arguments go inside the curly braces. 
-For example, the function implementation 
+For example, the Java function implementation 
 
 ```
 context -> assertThat(context.quotient, is(Double.POSITIVE_INFINITY));
 ```
 
-in Java looks like this in Groovy:
+looks like this in Groovy:
 
 ```
 { context -> assertThat(context.quotient, is(Double.POSITIVE_INFINITY)) }
@@ -306,7 +306,7 @@ in Java looks like this in Groovy:
 There are several significant differences in the use of gwt-test in Scala compared to Java and Groovy:
 
 1. The context class is declared inside of an ```object``` at the top of the test class, and the test implementation is contained in the companion class.
-2. In Scala, ```given``` and ```then``` are reserved words and cannot be used as method names. To use gwt-test in Scala, you declared a test object of type
+2. In Scala, ```given``` and ```then``` are reserved words and cannot be used as method names. To use gwt-test in Scala, you declare a test object of type
    ```ScalaGwtTest```, which is a wrapper class. The method names begin with uppercase letters to avoid conflicting with the reserved words. Thus, the GWT
    method names are ```Given```, ```When```, ```Then``` and ```And```.
 3. When instantiating the test object, the type argument is specified as ```classOf[class-name]``` so that the Java framework can instantiate it.

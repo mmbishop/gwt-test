@@ -26,7 +26,7 @@
     </parent>
 
     <artifactId>dist</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -69,8 +69,12 @@
                             <goal>single</goal>
                         </goals>
                         <configuration>
+                            <descriptorRefs>
+                                <descriptorRef>jar-with-dependencies</descriptorRef>
+                            </descriptorRefs>
                             <descriptors>
-                                <descriptor>assembly.xml</descriptor>
+                                <descriptor>src/assembly/bin.xml</descriptor>
+                                <descriptor>src/assembly/sources.xml</descriptor>
                             </descriptors>
                         </configuration>
                     </execution>

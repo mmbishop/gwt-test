@@ -92,6 +92,11 @@
                         <descriptorRefs>
                             <descriptorRef>jar-with-dependencies</descriptorRef>
                         </descriptorRefs>
+                        <descriptors>
+                            <descriptor>src/assembly/bin.xml</descriptor>
+                            <descriptor>src/assembly/sources.xml</descriptor>
+                        </descriptors>
+                        <finalName>${parent.artifactId}-${project.version}</finalName>
                     </configuration>
                 </plugin>
                 <plugin>

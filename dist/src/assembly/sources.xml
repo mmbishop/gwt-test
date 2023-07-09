@@ -14,10 +14,12 @@
   ~ limitations under the License.
   -->
 
-<assembly>
-    <id>assembly</id>
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.2.0 http://maven.apache.org/xsd/assembly-2.2.0.xsd">
+    <id>sources</id>
     <formats>
-        <format>dir</format>
+        <format>jar</format>
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
     <moduleSets>
@@ -27,10 +29,17 @@
                 <include>io.github.mmbishop:core</include>
                 <include>io.github.mmbishop:scala-wrapper</include>
             </includes>
-            <binaries>
-                <outputDirectory>target</outputDirectory>
-                <unpack>false</unpack>
-            </binaries>
+            <sources>
+                <includeModuleDirectory>false</includeModuleDirectory>
+                <fileSets>
+                    <fileSet>
+                        <outputDirectory>sources/${module.artifactId}</outputDirectory>
+                        <excludes>
+                            <exclude>${project.build.directory}/**</exclude>
+                        </excludes>
+                    </fileSet>
+                </fileSets>
+            </sources>
         </moduleSet>
     </moduleSets>
 </assembly>

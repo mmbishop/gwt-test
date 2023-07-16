@@ -37,10 +37,6 @@
                 <include>io.github.mmbishop:core</include>
                 <include>io.github.mmbishop:scala-wrapper</include>
             </includes>
-            <binaries>
-                <outputDirectory>target</outputDirectory>
-                <unpack>false</unpack>
-            </binaries>
         </moduleSet>
     </moduleSets>
 </assembly>

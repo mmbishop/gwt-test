@@ -119,6 +119,7 @@
                         </goals>
                     </execution>
                 </executions>
+                <inherited>false</inherited>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -133,6 +134,7 @@
                         </goals>
                     </execution>
                 </executions>
+                <inherited>false</inherited>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -153,6 +155,7 @@
                         </configuration>
                     </execution>
                 </executions>
+                <inherited>false</inherited>
             </plugin>
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>

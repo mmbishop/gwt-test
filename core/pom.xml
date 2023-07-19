@@ -25,13 +25,14 @@
         <version>1.2.0</version>
     </parent>
 
-    <artifactId>core</artifactId>
+    <artifactId>gwt-test-core</artifactId>
     <packaging>jar</packaging>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.deploy.skip>true</maven.deploy.skip>
     </properties>
 
     <build>

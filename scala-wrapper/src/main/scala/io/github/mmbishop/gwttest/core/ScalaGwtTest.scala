@@ -16,10 +16,13 @@
 
 package io.github.mmbishop.gwttest.core
 
-import io.github.mmbishop.gwttest.core.GwtTest
 import io.github.mmbishop.gwttest.functions.{GwtFunction, GwtFunctionWithArgument, GwtFunctionWithArguments}
 import io.github.mmbishop.gwttest.model.Context
 
+/**
+ * The core class for building Given-When-Then tests.
+ * @tparam T a subclass of [[Context]] that contains the fields used in test code.
+ */
 class ScalaGwtTest[T <: Context] {
 
   private var testObject: GwtTest[T] = _

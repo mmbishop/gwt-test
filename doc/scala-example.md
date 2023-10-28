@@ -24,9 +24,9 @@ import io.github.mmbishop.gwttest.functions.GwtFunction
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument
 import io.github.mmbishop.gwttest.model.Context
 import org.junit.jupiter.api.Test
-
 import org.hamcrest.CoreMatchers.is
 import org.hamcrest.MatcherAssert.assertThat
+import org.junit.jupiter.api.Assertions.assertTrue
 
 object DivisionTest {
   class TestContext extends Context {
@@ -37,7 +37,7 @@ object DivisionTest {
 }
 
 class DivisionTest {
-  
+
   @Test
   def quotient_of_two_numbers_is_calculated(): Unit = {
     gwt.test()
@@ -46,7 +46,7 @@ class DivisionTest {
       .When(dividing_the_dividend_by_the_divisor)
       .Then(the_quotient_is, 3.0)
   }
-  
+
   @Test
   def dividing_a_number_by_zero_results_in_infinity(): Unit = {
     gwt.test()
@@ -54,27 +54,26 @@ class DivisionTest {
       .When(dividing_the_dividend_by_zero)
       .Then(the_quotient_is_infinity)
   }
-  
-  private val gwt: ScalaGwtTest[TestContext] = new ScalaGwtTest(classof[TestContext])
-  
-  private val a_dividend: GwtFunctionWithArgument[TextContext, Double] 
-          = (context, dividend) => context.dividend = dividend
-  
-  private val a_divisor: GwtFunctionWithArgument[TextContext, Double]
-          = (context, divisor) => context.divisor = divisor
-  
+
+  private val gwt: ScalaGwtTest[TestContext] = new ScalaGwtTest[TestContext](classOf[TestContext])
+
+  private val a_dividend: GwtFunctionWithArgument[TestContext, Double]
+      = (context, dividend) => context.dividend = dividend
+
+  private val a_divisor: GwtFunctionWithArgument[TestContext, Double]
+      = (context, divisor) => context.divisor = divisor
+
   private val dividing_the_dividend_by_the_divisor: GwtFunction[TestContext]
-          = context => context.quotient = context.dividend / context.divisor
-  
+      = context => context.quotient = context.dividend / context.divisor
+
   private val dividing_the_dividend_by_zero: GwtFunction[TestContext]
-          = context => context.quotient = content.dividend / 0.0
-  
-  private val the_quotient_is: GwtFunctionWithArgument[TextContext, Double]
-          = (context, expectedQuotient) => assertThat(context.quotient, is(expectedQuotient))
-  
+      = context => context.quotient = context.dividend / 0.0
+
+  private val the_quotient_is: GwtFunctionWithArgument[TestContext, Double]
+      = (context, expectedQuotient) => assertThat(context.quotient, is(expectedQuotient))
+
   private val the_quotient_is_infinity: GwtFunction[TestContext]
-          = context => assertTrue(context.quotient.isPosInfinity)
+      = context => assertTrue(context.quotient.isPosInfinity)
 
 }
-
 ```

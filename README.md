@@ -9,9 +9,7 @@ Given-When-Then testing framework for Java, with support for Groovy and Scala
 [Background](#background)  
 [Writing tests using gwt-test](#writing-tests-using-gwt-test)  
 [Elements of gwt-test](#elements-of-gwt-test)  
-[An example test class using gwt-test](#an-example-test-class-using-gwt-test)  
-[Groovy Notes](#groovy-notes)  
-[Scala Notes](#scala-notes)
+[Example test classes using gwt-test](#example-test-classes-using-gwt-test)  
 
 ## Overview
 gwt-test provides an easy-to-use framework for writing unit and integration tests in the Given-When-Then format.
@@ -100,7 +98,7 @@ void customer_purchases_product_and_receives_invoice() {
 ```
 
 The first form is closer to canonical Gherkin and may be easier to read for most people, while the second form may be more familiar to developers used to 
-writing tests using something like jest-gwt in Typescript.
+writing tests using something like [jest-gwt](https://github.com/devzeebo/jest-gwt) in Typescript.
 
 ## Elements of gwt-test
 
@@ -220,68 +218,13 @@ thrown during the execution of a _when_ function. To check if an exception was t
 private final GwtFunction<TestContext> an_exception_is_thrown = context -> assertNotNull(context.thrownException);
 ```
 
-## An example test class using gwt-test
+## Example test classes using gwt-test
 
-The following is a trivial but valid example of a test class that uses gwt-test.
+The following are trivial but valid examples of a test class that uses gwt-test.
 
-```java
-package gwttest.example;
-
-import io.github.mmbishop.gwttest.core.GwtTest;
-import io.github.mmbishop.gwttest.functions.GwtFunction;
-import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
-import io.github.mmbishop.gwttest.model.Context;
-import org.junit.jupiter.api.Test;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-public class DivisionTest {
-
-    private final GwtTest<TestContext> gwt = new GwtTest<>(TestContext.class);
-
-    @Test
-    void quotient_of_two_numbers_is_calculated() {
-        gwt.test()
-                .given(a_dividend, 12.0)
-                .and(a_divisor, 4.0)
-                .when(dividing_the_dividend_by_the_divisor)
-                .then(the_quotient_is, 3.0);
-    }
-
-    @Test
-    void dividing_a_number_by_zero_results_in_infinity() {
-        gwt.test()
-                .given(a_dividend, 6.0)
-                .when(dividing_the_dividend_by_zero)
-                .then(the_quotient_is_infinity);
-    }
-
-    private final GwtFunctionWithArgument<TestContext, Double> a_dividend  
-            = (context, dividend) -> context.dividend = dividend;
-
-    private final GwtFunctionWithArgument<TestContext, Double> a_divisor  
-            = (context, divisor) -> context.divisor = divisor;
-
-    private final GwtFunction<TestContext> dividing_the_dividend_by_the_divisor  
-            = context -> context.quotient = context.dividend / context.divisor;
-    
-    private final GwtFunction<TestContext> dividing_the_dividend_by_zero  
-            = context -> context.quotient = context.dividend / 0.0;
-
-    private final GwtFunctionWithArgument<TestContext, Double> the_quotient_is  
-            = (context, expectedQuotient) -> assertThat(context.quotient, is(expectedQuotient));
-    
-    private final GwtFunction<TestContext> the_quotient_is_infinity  
-            = context -> assertThat(context.quotient, is(Double.POSITIVE_INFINITY));
-
-    public static final class TestContext extends Context {
-        Double dividend;
-        Double divisor;
-        Double quotient;
-    }
-}
-```
+- [Java](doc/java-example.md)
+- [Groovy](doc/groovy-example.md)
+- [Scala](doc/scala-example.md)
 
 Note: The JUnit and Hamcrest dependencies supporting the imports in the example are test-scoped in the gwt-test library, so you won't get them as 
 transitive dependencies. They are not required (though JUnit will almost certainly be needed), but if you want those dependencies you will need to declare them 
@@ -293,40 +236,6 @@ You've noticed that the test method and function names are specified using snake
 snake case in my test classes because it's possible that I may need to ask a domain expert or business analyst to look at a test
 to make sure I'm covering all of the cases. They are much more likely to want to read snake case than camel case. All I would ask them to read is the test
 methods (those annotated with @Test). Any other supporting methods I write will be named using camel case since only developers will be looking at that code.
-
-## Groovy Notes
-
-Using gwt-test in Groovy is almost exactly the same as using it in Java. There are only a couple of significant differences:
-
-1. ```public``` is the default scope, so the context class can be declared as a ```static class```
-
-2. Groovy's Lambda syntax is a little different than Java's. The function implementations must be enclosed in curly braces, and the arguments go inside the curly braces. 
-For example, the Java function implementation 
-
-```
-context -> assertThat(context.quotient, is(Double.POSITIVE_INFINITY));
-```
-
-looks like this in Groovy:
-
-```
-{ context -> assertThat(context.quotient, is(Double.POSITIVE_INFINITY)) }
-```
-
-## Scala Notes
-
-There are several significant differences in the use of gwt-test in Scala compared to Java and Groovy:
-
-1. The context class is declared inside of an ```object``` at the top of the test class, and the test implementation is contained in the companion class.
-2. Fields in the context class must be ```var```s and must be explicitly initialized. You can use the default value constant ```_``` for this purpose, as in
-   ```var field = _```.
-3. In Scala, ```given``` and ```then``` are reserved words and cannot be used as method names. To use gwt-test in Scala, you declare a test object of type
-   ```ScalaGwtTest```, which is a wrapper class. The method names begin with uppercase letters to avoid conflicting with the reserved words. Thus, the GWT
-   method names are ```Given```, ```When```, ```Then``` and ```And```.
-4. When instantiating the test object, the type argument is specified as ```classOf[class-name]``` so that the Java framework can instantiate it.
-5. Test methods return ```Unit```, which is the Scala equivalent of the Java ```void``` method.
-
-See the [ScalaGwtTestWrapperTest](src/test/scala/io/github/mmbishop/gwttest/ScalaGwtTestWrapperTest.scala) class for an example of using gwt-test in Scala.
 
 ## Examples
 

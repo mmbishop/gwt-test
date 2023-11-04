@@ -21,6 +21,8 @@ import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
 import io.github.mmbishop.gwttest.model.Context;
 import io.github.mmbishop.gwttest.model.TestPhase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -30,6 +32,8 @@ import java.util.Optional;
  * @param <T> a subclass of {@link Context} that contains the fields used in test code.
  */
 public class GwtTest<T extends Context> {
+
+    private static Logger logger = LoggerFactory.getLogger(GwtTest.class);
 
     private TestPhase testPhase;
     private TestPhaseValidator testPhaseValidator;
@@ -102,6 +106,11 @@ public class GwtTest<T extends Context> {
         return this;
     }
 
+    @SafeVarargs
+    final GwtTest<T> callGiven(GwtFunction<T>... gwtFunctions) {
+        return given(gwtFunctions);
+    }
+
     /**
      * Invokes the given function on the given argument and context object.
      * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Given clause. This function takes
@@ -114,6 +123,10 @@ public class GwtTest<T extends Context> {
         context.testPhase = TestPhase.GIVEN;
         invokeGwtFunction(gwtFunction, arg);
         return this;
+    }
+
+    final <V> GwtTest<T> callGiven(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
+        return given(gwtFunction, arg);
     }
 
     /**
@@ -131,6 +144,11 @@ public class GwtTest<T extends Context> {
         return this;
     }
 
+    @SafeVarargs
+    final <V> GwtTest<T> callGiven(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
+        return given(gwtFunction, args);
+    }
+
     /**
      * Invokes the given functions with the context object.
      * @param gwtFunctions {@code GwtFunction}s that contain logic to be performed as part of the When clause
@@ -142,6 +160,11 @@ public class GwtTest<T extends Context> {
         context.testPhase = TestPhase.WHEN;
         invokeGwtFunctions(gwtFunctions);
         return this;
+    }
+
+    @SafeVarargs
+    final GwtTest<T> callWhen(GwtFunction<T>... gwtFunctions) {
+        return when(gwtFunctions);
     }
 
     /**
@@ -156,6 +179,10 @@ public class GwtTest<T extends Context> {
         context.testPhase = TestPhase.WHEN;
         invokeGwtFunction(gwtFunction, arg);
         return this;
+    }
+
+    final <V> GwtTest<T> callWhen(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
+        return when(gwtFunction, arg);
     }
 
     /**
@@ -173,6 +200,11 @@ public class GwtTest<T extends Context> {
         return this;
     }
 
+    @SafeVarargs
+    final <V> GwtTest<T> callWhen(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
+        return when(gwtFunction, args);
+    }
+
     /**
      * Invokes the given functions with the context object.
      * @param gwtFunctions {@code GwtFunction}s that contain logic to be performed as part of the Then clause
@@ -184,6 +216,11 @@ public class GwtTest<T extends Context> {
         context.testPhase = TestPhase.THEN;
         invokeGwtFunctions(gwtFunctions);
         return this;
+    }
+
+    @SafeVarargs
+    final GwtTest<T> callThen(GwtFunction<T>... gwtFunctions) {
+        return then(gwtFunctions);
     }
 
     /**
@@ -200,6 +237,10 @@ public class GwtTest<T extends Context> {
         return this;
     }
 
+    final <V> GwtTest<T> callThen(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
+        return then(gwtFunction, arg);
+    }
+
     /**
      * Invokes the given function on the given argument and context object.
      * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the Then clause. This function takes
@@ -213,6 +254,11 @@ public class GwtTest<T extends Context> {
         context.testPhase = TestPhase.THEN;
         invokeGwtFunction(gwtFunction, args);
         return this;
+    }
+
+    @SafeVarargs
+    final <V> GwtTest<T> callThen(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
+        return then(gwtFunction, args);
     }
 
     /**
@@ -262,6 +308,7 @@ public class GwtTest<T extends Context> {
         }
         catch (Exception e) {
             context.thrownException = e;
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -272,6 +319,7 @@ public class GwtTest<T extends Context> {
         }
         catch (Exception e) {
             context.thrownException = e;
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -282,6 +330,7 @@ public class GwtTest<T extends Context> {
         }
         catch (Exception e) {
             context.thrownException = e;
+            logger.error(e.getMessage(), e);
         }
     }
 

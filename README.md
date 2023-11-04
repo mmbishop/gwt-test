@@ -1,5 +1,16 @@
 # gwt-test
-Given-When-Then testing framework for Java
+Given-When-Then testing framework for Java, with support for Groovy and Scala
+
+## Table of Contents
+
+[Overview](#overview)  
+[How to Use](#how-to-use)  
+[Language Support](#language-support)  
+[Background](#background)  
+[Writing Tests Using gwt-test](#writing-tests-using-gwt-test)  
+[Elements of gwt-test](#elements-of-gwt-test)  
+[Example Test Classes Using gwt-test](#example-test-classes-using-gwt-test)  
+[See Also](#see-also)
 
 ## Overview
 gwt-test provides an easy-to-use framework for writing unit and integration tests in the Given-When-Then format.
@@ -12,17 +23,27 @@ To use gwt-test, include it as a dependency as follows:
 <dependency>
     <groupId>io.github.mmbishop</groupId>
     <artifactId>gwt-test</artifactId>
-    <version>1.0.0</version>
+    <version>1.2.0</version>
     <scope>test</scope>
 </dependency>
 ```
 
 **Gradle**
 ```
-testImplementation 'io.github.mmbishop:gwt-test:1.0.0'
+testImplementation 'io.github.mmbishop:gwt-test:1.2.0'
 ```
 
-gwt-test requires Java 17 or later.
+**sbt**
+```
+"io.github.mmbishop" % "gwt-test" % "1.2.0" % Test
+```
+
+## Language Support
+| Language | Version                       |
+| -------- |-------------------------------|
+| Java     | [17,)                         |
+| Groovy   | [3,)                          |
+| Scala    | [3.0,), [2.13.6,), [2.12.15,) |
 
 ## Background
 The Given-When-Then testing format is based on the [Gherkin](https://cucumber.io/docs/gherkin/) language for specifying test scenarios and business rules. An
@@ -43,7 +64,7 @@ or fix a bug isn't changing the required behavior of the code, so the tests shou
 * The test code is more modular, leading to code reuse.
 * The tests read like acceptance criteria, which can facilitate more conversations between different stakeholders such as developers, QA, product owners and business users.
 
-## Writing tests using gwt-test
+## Writing Tests Using gwt-test
 
 The product purchase scenario shown above can be expressed using gwt-test as follows:
 
@@ -78,7 +99,7 @@ void customer_purchases_product_and_receives_invoice() {
 ```
 
 The first form is closer to canonical Gherkin and may be easier to read for most people, while the second form may be more familiar to developers used to 
-writing tests using something like jest-gwt in Typescript.
+writing tests using a package like [jest-gwt](https://github.com/devzeebo/jest-gwt).
 
 ## Elements of gwt-test
 
@@ -192,80 +213,29 @@ void numbers_can_be_multiplied_and_divided() {
 #### Exception handling
 
 The base [Context](src/main/java/io/github/mmbishop/gwttest/model/Context.java) class has a property called ```thrownException``` that stores any exception that is
-thrown during the execution of a _when_ function. To check if an exception was thrown, you can simply check that property. For example,
+thrown during the execution of a test. To check if an exception was thrown, you can simply check that property. For example,
 
 ```
 private final GwtFunction<TestContext> an_exception_is_thrown = context -> assertNotNull(context.thrownException);
 ```
 
-## An example test class using gwt-test
+Exceptions are logged by gwt-test using the [SLF4J](https://www.slf4j.org/) API, but no implementation is provided in order to reduce the 
+risk of conflicts with logging implementations that you're using. To see exception log messages in your tests, you will need to have an SLF4J 
+implementation among your dependencies.
 
-The following is a trivial but valid example of a test class that uses gwt-test.
+## Example Test Classes Using gwt-test
 
-```java
-package gwttest.example;
+The following are trivial but valid examples of a test class that uses gwt-test.
 
-import io.github.mmbishop.gwttest.core.GwtTest;
-import io.github.mmbishop.gwttest.functions.GwtFunction;
-import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
-import io.github.mmbishop.gwttest.model.Context;
-import org.junit.jupiter.api.Test;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-public class DivisionTest {
-
-    private final GwtTest<TestContext> gwt = new GwtTest<>(TestContext.class);
-
-    @Test
-    void quotient_of_two_numbers_is_calculated() {
-        gwt.test()
-                .given(a_dividend, 12.0)
-                .and(a_divisor, 4.0)
-                .when(dividing_the_dividend_by_the_divisor)
-                .then(the_quotient_is, 3.0);
-    }
-
-    @Test
-    void dividing_a_number_by_zero_results_in_infinity() {
-        gwt.test()
-                .given(a_dividend, 6.0)
-                .when(dividing_the_dividend_by_zero)
-                .then(the_quotient_is_infinity);
-    }
-
-    private final GwtFunctionWithArgument<TestContext, Double> a_dividend  
-            = (context, dividend) -> context.dividend = dividend;
-
-    private final GwtFunctionWithArgument<TestContext, Double> a_divisor  
-            = (context, divisor) -> context.divisor = divisor;
-
-    private final GwtFunction<TestContext> dividing_the_dividend_by_the_divisor  
-            = context -> context.quotient = context.dividend / context.divisor;
-    
-    private final GwtFunction<TestContext> dividing_the_dividend_by_zero  
-            = context -> context.quotient = context.dividend / 0.0;
-
-    private final GwtFunctionWithArgument<TestContext, Double> the_quotient_is  
-            = (context, expectedQuotient) -> assertThat(context.quotient, is(expectedQuotient));
-    
-    private final GwtFunction<TestContext> the_quotient_is_infinity  
-            = context -> assertThat(context.quotient, is(Double.POSITIVE_INFINITY));
-
-    public static final class TestContext extends Context {
-        Double dividend;
-        Double divisor;
-        Double quotient;
-    }
-}
-```
+- [Java](doc/java-example.md)
+- [Groovy](doc/groovy-example.md)
+- [Scala](doc/scala-example.md)
 
 Note: The JUnit and Hamcrest dependencies supporting the imports in the example are test-scoped in the gwt-test library, so you won't get them as 
 transitive dependencies. They are not required (though JUnit will almost certainly be needed), but if you want those dependencies you will need to declare them 
 in your project. Hamcrest is recommended as its matcher methods are very useful for writing assertions.
 
-### Why snake case?
+### Why Snake Case?
 
 You've noticed that the test method and function names are specified using snake case. You don't have to use snake case; camel case is perfectly fine. I use
 snake case in my test classes because it's possible that I may need to ask a domain expert or business analyst to look at a test
@@ -275,3 +245,7 @@ methods (those annotated with @Test). Any other supporting methods I write will 
 ## Examples
 
 You can see examples of unit tests that are written with gwt-test in the [unit test package](src/test/java/io/github/mmbishop/gwttest).
+
+## See Also
+
+- [jest-gwt](https://github.com/devzeebo/jest-gwt) is a package that provides excellent support for Given-When-Then tests in your Typescript projects. 

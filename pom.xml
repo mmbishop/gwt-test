@@ -6,8 +6,8 @@
 
     <groupId>io.github.mmbishop</groupId>
     <artifactId>gwt-test</artifactId>
-    <version>1.1.0</version>
-    <packaging>jar</packaging>
+    <version>1.2.0</version>
+    <packaging>pom</packaging>
 
     <name>${project.groupId}:${project.artifactId}</name>
     <description>A framework for building unit and integration tests using the Gherkin (Given-When-Then) approach.</description>
@@ -27,6 +27,12 @@
             <url>https://mmbishop.github.io/</url>
         </developer>
     </developers>
+
+    <modules>
+        <module>core</module>
+        <module>scala-wrapper</module>
+        <module>dist</module>
+    </modules>
 
     <scm>
         <connection>scm:git:git://github.com/mmbishop/gwt-test.git</connection>
@@ -62,6 +68,24 @@
     </distributionManagement>
 
     <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                    <configuration>
+                        <source>17</source>
+                        <target>17</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>4.8.2-SNAPSHOT</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -71,7 +95,7 @@
                     <execution>
                         <id>attach-sources</id>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>aggregate</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -79,15 +103,17 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.3.2</version>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
-                        <id>attach-javadoc</id>
+                        <id>create-aggregated-javadoc</id>
+                        <phase>generate-resources</phase>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>aggregate-jar</goal>
                         </goals>
                     </execution>
                 </executions>
+                <inherited>false</inherited>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -108,6 +134,7 @@
                         </configuration>
                     </execution>
                 </executions>
+                <inherited>false</inherited>
             </plugin>
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>

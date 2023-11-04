@@ -35,7 +35,7 @@ public class ExceptionTest {
     }
 
     private final GwtFunction<ExceptionContext> doing_something = context -> {
-        throw new RuntimeException();
+        throw new RuntimeException("An error occurred while doing something.");
     };
 
     private final GwtFunction<ExceptionContext> an_exception_is_thrown = context -> assertNotNull(context.thrownException);

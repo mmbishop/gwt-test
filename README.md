@@ -4,12 +4,13 @@ Given-When-Then testing framework for Java, with support for Groovy and Scala
 ## Table of Contents
 
 [Overview](#overview)  
-[How to use](#how-to-use)  
+[How to Use](#how-to-use)  
 [Language Support](#language-support)  
 [Background](#background)  
-[Writing tests using gwt-test](#writing-tests-using-gwt-test)  
+[Writing Tests Using gwt-test](#writing-tests-using-gwt-test)  
 [Elements of gwt-test](#elements-of-gwt-test)  
-[Example test classes using gwt-test](#example-test-classes-using-gwt-test)  
+[Example Test Classes Using gwt-test](#example-test-classes-using-gwt-test)  
+[See Also](#see-also)
 
 ## Overview
 gwt-test provides an easy-to-use framework for writing unit and integration tests in the Given-When-Then format.
@@ -63,7 +64,7 @@ or fix a bug isn't changing the required behavior of the code, so the tests shou
 * The test code is more modular, leading to code reuse.
 * The tests read like acceptance criteria, which can facilitate more conversations between different stakeholders such as developers, QA, product owners and business users.
 
-## Writing tests using gwt-test
+## Writing Tests Using gwt-test
 
 The product purchase scenario shown above can be expressed using gwt-test as follows:
 
@@ -98,7 +99,7 @@ void customer_purchases_product_and_receives_invoice() {
 ```
 
 The first form is closer to canonical Gherkin and may be easier to read for most people, while the second form may be more familiar to developers used to 
-writing tests using something like [jest-gwt](https://github.com/devzeebo/jest-gwt) in Typescript.
+writing tests using a package like [jest-gwt](https://github.com/devzeebo/jest-gwt).
 
 ## Elements of gwt-test
 
@@ -212,13 +213,17 @@ void numbers_can_be_multiplied_and_divided() {
 #### Exception handling
 
 The base [Context](src/main/java/io/github/mmbishop/gwttest/model/Context.java) class has a property called ```thrownException``` that stores any exception that is
-thrown during the execution of a _when_ function. To check if an exception was thrown, you can simply check that property. For example,
+thrown during the execution of a test. To check if an exception was thrown, you can simply check that property. For example,
 
 ```
 private final GwtFunction<TestContext> an_exception_is_thrown = context -> assertNotNull(context.thrownException);
 ```
 
-## Example test classes using gwt-test
+Exceptions are logged by gwt-test using the [SLF4J](https://www.slf4j.org/) API, but no implementation is provided in order to reduce the 
+risk of conflicts with logging implementations that you're using. To see exception log messages in your tests, you will need to have an SLF4J 
+implementation among your dependencies.
+
+## Example Test Classes Using gwt-test
 
 The following are trivial but valid examples of a test class that uses gwt-test.
 
@@ -230,7 +235,7 @@ Note: The JUnit and Hamcrest dependencies supporting the imports in the example 
 transitive dependencies. They are not required (though JUnit will almost certainly be needed), but if you want those dependencies you will need to declare them 
 in your project. Hamcrest is recommended as its matcher methods are very useful for writing assertions.
 
-### Why snake case?
+### Why Snake Case?
 
 You've noticed that the test method and function names are specified using snake case. You don't have to use snake case; camel case is perfectly fine. I use
 snake case in my test classes because it's possible that I may need to ask a domain expert or business analyst to look at a test
@@ -240,3 +245,7 @@ methods (those annotated with @Test). Any other supporting methods I write will 
 ## Examples
 
 You can see examples of unit tests that are written with gwt-test in the [unit test package](src/test/java/io/github/mmbishop/gwttest).
+
+## See Also
+
+- [jest-gwt](https://github.com/devzeebo/jest-gwt) is a package that provides excellent support for Given-When-Then tests in your Typescript projects. 

@@ -12,7 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 1.2.0 - 2023-10-28
 
 ### Added
-- Scala support
+- Scala support.
+
+### Fixed
+- Log exceptions when they caught during a test, in addition to capturing them.
 
 ## 1.1.0 - 2023-06-09
 

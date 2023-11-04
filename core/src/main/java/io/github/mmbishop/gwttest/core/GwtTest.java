@@ -21,6 +21,8 @@ import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
 import io.github.mmbishop.gwttest.model.Context;
 import io.github.mmbishop.gwttest.model.TestPhase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -30,6 +32,8 @@ import java.util.Optional;
  * @param <T> a subclass of {@link Context} that contains the fields used in test code.
  */
 public class GwtTest<T extends Context> {
+
+    private static Logger logger = LoggerFactory.getLogger(GwtTest.class);
 
     private TestPhase testPhase;
     private TestPhaseValidator testPhaseValidator;
@@ -304,6 +308,7 @@ public class GwtTest<T extends Context> {
         }
         catch (Exception e) {
             context.thrownException = e;
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -314,6 +319,7 @@ public class GwtTest<T extends Context> {
         }
         catch (Exception e) {
             context.thrownException = e;
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -324,6 +330,7 @@ public class GwtTest<T extends Context> {
         }
         catch (Exception e) {
             context.thrownException = e;
+            logger.error(e.getMessage(), e);
         }
     }
 

@@ -98,6 +98,7 @@
                         </goals>
                         <configuration>
                             <includeDependencySources>true</includeDependencySources>
+                            <excludePackageNames>org.slf4j:org.slf4j.*</excludePackageNames>
                         </configuration>
                     </execution>
                 </executions>

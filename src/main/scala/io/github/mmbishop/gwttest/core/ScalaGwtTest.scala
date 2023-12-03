@@ -21,6 +21,7 @@ import io.github.mmbishop.gwttest.model.Context
 
 /**
  * The core class for building Given-When-Then tests.
+ *
  * @tparam T a subclass of [[Context]] that contains the fields used in test code.
  */
 class ScalaGwtTest[T <: Context] {

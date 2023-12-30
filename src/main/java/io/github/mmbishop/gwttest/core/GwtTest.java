@@ -33,7 +33,7 @@ import java.util.Optional;
  */
 public class GwtTest<T extends Context> {
 
-    private static Logger logger = LoggerFactory.getLogger(GwtTest.class);
+    private final static Logger logger = LoggerFactory.getLogger(GwtTest.class);
 
     private TestPhase testPhase;
     private TestPhaseValidator testPhaseValidator;

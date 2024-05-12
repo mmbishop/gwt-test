@@ -23,19 +23,19 @@ To use gwt-test, include it as a dependency as follows:
 <dependency>
     <groupId>io.github.mmbishop</groupId>
     <artifactId>gwt-test</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <scope>test</scope>
 </dependency>
 ```
 
 **Gradle**
 ```
-testImplementation 'io.github.mmbishop:gwt-test:1.2.0'
+testImplementation 'io.github.mmbishop:gwt-test:1.2.1'
 ```
 
 **sbt**
 ```
-"io.github.mmbishop" % "gwt-test" % "1.2.0" % Test
+"io.github.mmbishop" % "gwt-test" % "1.2.1" % Test
 ```
 
 ## Language Support
@@ -212,8 +212,20 @@ void numbers_can_be_multiplied_and_divided() {
 
 #### Exception handling
 
+Any exception thrown during a test will be caught and rethrown by gwt-test unless the exception class is declared as an expected exception.
+To declare an exception as expected, use the ```expectingException``` method as follows:
+
+```
+gwt.test().expectingException(ExpectedExceptionClass.class)
+```
+
+If an exception is thrown during the test, gwt-test will check if the thrown exception class is the expected exception class
+(ExpectedExceptionClass in this example). If it is, then the test continues. If the thrown exception is of a different class from the one
+that is expected, or no expected exception class has been declared, gwt-test will soften the exception by wrapping it in an instance of
+```UnexpectedExceptionCaughtException``` and throw it.
+
 The base [Context](src/main/java/io/github/mmbishop/gwttest/model/Context.java) class has a property called ```thrownException``` that stores any exception that is
-thrown during the execution of a test. To check if an exception was thrown, you can simply check that property. For example,
+thrown during the execution of a test. To check if an expected exception was thrown, you can simply check that property. For example,
 
 ```
 private final GwtFunction<TestContext> an_exception_is_thrown = context -> assertNotNull(context.thrownException);

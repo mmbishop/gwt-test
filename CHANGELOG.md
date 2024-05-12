@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Kotlin support
 
+## 1.2.1 - 2024-05-12
+
+### Fixed
+- If a test throws an exception, it was caught and logged, but the test could still pass as a false positive if the exception being thrown is not expected within the 
+test. The fix allows an expected exception class to be declared and if an exception of a different class is thrown during a test, the test will fail. 
+
 ## 1.2.0 - 2023-10-28
 
 ### Added

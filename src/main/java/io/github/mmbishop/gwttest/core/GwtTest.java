@@ -93,6 +93,11 @@ public class GwtTest<T extends Context> {
         throw new MalformedTestException("Can't call test() more than once.");
     }
 
+    public GwtTest<T> expectingException(Class<? extends Exception> expectedExceptionClass) {
+        context.expectedExceptionClass = expectedExceptionClass;
+        return this;
+    }
+
     /**
      * Invokes the given functions with the context object.
      * @param gwtFunctions {@code GwtFunction}s that contain logic to be performed as part of the Given clause
@@ -309,6 +314,7 @@ public class GwtTest<T extends Context> {
         catch (Exception e) {
             context.thrownException = e;
             logger.error(e.getMessage(), e);
+            throwCaughtExceptionIfNotExpected(e);
         }
     }
 
@@ -320,6 +326,7 @@ public class GwtTest<T extends Context> {
         catch (Exception e) {
             context.thrownException = e;
             logger.error(e.getMessage(), e);
+            throwCaughtExceptionIfNotExpected(e);
         }
     }
 
@@ -331,6 +338,7 @@ public class GwtTest<T extends Context> {
         catch (Exception e) {
             context.thrownException = e;
             logger.error(e.getMessage(), e);
+            throwCaughtExceptionIfNotExpected(e);
         }
     }
 
@@ -341,6 +349,12 @@ public class GwtTest<T extends Context> {
                 .findFirst()
                 .map(StackWalker.StackFrame::getMethodName));
         return callingMethodName.orElse("unknown");
+    }
+
+    private void throwCaughtExceptionIfNotExpected(Exception e) {
+        if (context.expectedExceptionClass == null || !context.expectedExceptionClass.equals(e.getClass())) {
+            throw new UnexpectedExceptionCaughtException(e);
+        }
     }
 
 }

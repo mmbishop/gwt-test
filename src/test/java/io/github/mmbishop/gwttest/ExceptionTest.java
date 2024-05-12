@@ -17,8 +17,10 @@
 package io.github.mmbishop.gwttest;
 
 import io.github.mmbishop.gwttest.core.GwtTest;
+import io.github.mmbishop.gwttest.core.UnexpectedExceptionCaughtException;
 import io.github.mmbishop.gwttest.functions.GwtFunction;
 import io.github.mmbishop.gwttest.model.Context;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -28,17 +30,33 @@ public class ExceptionTest {
     private final GwtTest<ExceptionContext> gwt = new GwtTest<>(ExceptionContext.class);
 
     @Test
-    void exception_is_thrown() {
-        gwt.test()
+    void expected_exception_is_thrown_and_caught() {
+        gwt.test().expectingException(RuntimeException.class)
                 .when(doing_something)
-                .then(an_exception_is_thrown);
+                .then(an_exception_is_thrown_and_caught);
+    }
+
+    @Test
+    void unexpected_exception_is_thrown_in_the_test_and_rethrown_by_gwt_test() {
+        try {
+            gwt.test()
+                    .when(doing_something)
+                    .then(an_exception_is_thrown_and_caught);
+            Assertions.fail();
+        }
+        catch (UnexpectedExceptionCaughtException e) {
+            // Test succeeds if this exception is thrown.
+        }
+        catch (Exception e) {
+            Assertions.fail();
+        }
     }
 
     private final GwtFunction<ExceptionContext> doing_something = context -> {
         throw new RuntimeException("An error occurred while doing something.");
     };
 
-    private final GwtFunction<ExceptionContext> an_exception_is_thrown = context -> assertNotNull(context.thrownException);
+    private final GwtFunction<ExceptionContext> an_exception_is_thrown_and_caught = context -> assertNotNull(context.thrownException);
 
     public static class ExceptionContext extends Context {}
 

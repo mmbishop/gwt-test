@@ -17,6 +17,7 @@
 package io.github.mmbishop.gwttest
 
 import io.github.mmbishop.gwttest.ScalaGwtTestWrapperTest.TestContext
+import io.github.mmbishop.gwttest.core.ScalaGwtTest
 import io.github.mmbishop.gwttest.functions.GwtFunction
 import io.github.mmbishop.gwttest.model.Context
 import org.junit.jupiter.api.Test

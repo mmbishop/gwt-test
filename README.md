@@ -23,19 +23,19 @@ To use gwt-test, include it as a dependency as follows:
 <dependency>
     <groupId>io.github.mmbishop</groupId>
     <artifactId>gwt-test</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <scope>test</scope>
 </dependency>
 ```
 
 **Gradle**
 ```
-testImplementation 'io.github.mmbishop:gwt-test:1.2.0'
+testImplementation 'io.github.mmbishop:gwt-test:1.2.1'
 ```
 
 **sbt**
 ```
-"io.github.mmbishop" % "gwt-test" % "1.2.0" % Test
+"io.github.mmbishop" % "gwt-test" % "1.2.1" % Test
 ```
 
 ## Language Support
@@ -213,10 +213,10 @@ void numbers_can_be_multiplied_and_divided() {
 #### Exception handling
 
 Any exception thrown during a test will be caught and rethrown by gwt-test unless the exception class is declared as an expected exception.
-To declare an exception as expected, use the ```withExpectedException``` method as follows:
+To declare an exception as expected, use the ```expectingException``` method as follows:
 
 ```
-gwt.test().withExpectedException(ExpectedExceptionClass.class)
+gwt.test().expectingException(ExpectedExceptionClass.class)
 ```
 
 If an exception is thrown during the test, gwt-test will check if the thrown exception class is the expected exception class

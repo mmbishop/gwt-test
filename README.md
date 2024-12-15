@@ -258,6 +258,12 @@ methods (those annotated with @Test). Any other supporting methods I write will 
 
 You can see examples of unit tests that are written with gwt-test in the [unit test package](src/test/java/io/github/mmbishop/gwttest).
 
+## Logging
+
+gwt-test supports logging in your tests via the [SLF4J](https://www.slf4j.org/) framework. However, gwt-test doesn't provide the slf4j library because
+doing so would cause a resolution error in projects with module descriptors that require org.slf4j. Thus, if you want logging in your tests, you'll need 
+to include org.slf4j:slf4j-api and an SLF4J implementation (such as log4j-slf4j2-impl) in your dependencies.
+
 ## See Also
 
 - [jest-gwt](https://github.com/devzeebo/jest-gwt) is a package that provides excellent support for Given-When-Then tests in your Typescript projects. 

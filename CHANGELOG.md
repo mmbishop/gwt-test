@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Kotlin support
 
+## 1.2.2 - 2024-11-09
+
+### Fixed
+- If your project has a module descriptor that requires org.slf4j, tests will not run because slf4j classes are available from your project and
+gwt-test, which results in a resolution error. The gwt-test POM has been modified to omit the slf4j artifact in the generated jar. This means that if
+you want logging in your GWT tests, you'll need to include org.slf4j:slf4j-api as well as an slf4j implementation as dependencies.
+
 ## 1.2.1 - 2024-05-12
 
 ### Fixed

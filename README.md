@@ -10,6 +10,7 @@ Given-When-Then testing framework for Java, with support for Groovy and Scala
 [Writing Tests Using gwt-test](#writing-tests-using-gwt-test)  
 [Elements of gwt-test](#elements-of-gwt-test)  
 [Example Test Classes Using gwt-test](#example-test-classes-using-gwt-test)  
+[Logging](#logging)  
 [See Also](#see-also)
 
 ## Overview

@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Kotlin support
 
+## 1.2.3 - 2024-12-16
+
+### Fixed
+- Updated README documentation.
+- Restored code examples referenced in the documentation. Somehow, these had gotten lost in a previous update.
+
 ## 1.2.2 - 2024-11-09
 
 ### Fixed

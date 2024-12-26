@@ -1,5 +1,5 @@
 # gwt-test
-Given-When-Then testing framework for Java, with support for Groovy and Scala
+Given-When-Then testing framework for Java, with support for Groovy, Scala and Kotlin
 
 ## Table of Contents
 
@@ -24,27 +24,28 @@ To use gwt-test, include it as a dependency as follows:
 <dependency>
     <groupId>io.github.mmbishop</groupId>
     <artifactId>gwt-test</artifactId>
-    <version>1.2.2</version>
+    <version>1.3.0</version>
     <scope>test</scope>
 </dependency>
 ```
 
 **Gradle**
 ```
-testImplementation 'io.github.mmbishop:gwt-test:1.2.2'
+testImplementation 'io.github.mmbishop:gwt-test:1.3.0'
 ```
 
 **sbt**
 ```
-"io.github.mmbishop" % "gwt-test" % "1.2.2" % Test
+"io.github.mmbishop" % "gwt-test" % "1.3.0" % Test
 ```
 
 ## Language Support
-| Language | Version                       |
-| -------- |-------------------------------|
-| Java     | [17,)                         |
-| Groovy   | [3,)                          |
-| Scala    | [3.0,), [2.13.6,), [2.12.15,) |
+| Language  | Version                       |
+|-----------|-------------------------------|
+| Java      | [17,)                         |
+| Groovy    | [3,)                          |
+| Kotlin    | [1.6,), [2,)                  |
+| Scala     | [3.0,), [2.13.6,), [2.12.15,) |
 
 ## Background
 The Given-When-Then testing format is based on the [Gherkin](https://cucumber.io/docs/gherkin/) language for specifying test scenarios and business rules. An

@@ -4,10 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## 1.3.0 - 2024-12-27
 
 ### Added
-- Kotlin support
+- Kotlin support.
+- The Scala API has been changed. The ```given```, ```when```, ```then``` and ```and``` method names no longer begin with uppercase letters.
+  The method names ```given``` and ```then```, which are reserved words in Scala, must be enclosed in backquotes.
+  See the [Scala code examples](doc/scala-example.md) for more information.
+
+### Fixed
+- The Scala wrapper is no longer necessary. It has been removed.
 
 ## 1.2.3 - 2024-12-16
 

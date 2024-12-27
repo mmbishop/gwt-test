@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Kotlin support.
 - The Scala API has been changed. The ```given```, ```when```, ```then``` and ```and``` method names no longer begin with uppercase letters.
-  The method names ```given``` and ```then```, which are reserved words in Scala, are enclosed in backquotes.
+  The method names ```given``` and ```then```, which are reserved words in Scala, must be enclosed in backquotes.
   See the [Scala code examples](doc/scala-example.md) for more information.
 
 ### Fixed

@@ -32,7 +32,14 @@ public class ExceptionTest {
     @Test
     void expected_exception_is_thrown_and_caught() {
         gwt.test().expectingException(RuntimeException.class)
-                .when(doing_something)
+                .when(doing_something_that_results_in_an_exception)
+                .then(an_exception_is_thrown_and_caught);
+    }
+
+    @Test
+    void expected_error_is_thrown_and_caught() {
+        gwt.test().expectingException(Error.class)
+                .when(doing_something_that_results_in_an_error)
                 .then(an_exception_is_thrown_and_caught);
     }
 
@@ -40,7 +47,7 @@ public class ExceptionTest {
     void unexpected_exception_is_thrown_in_the_test_and_rethrown_by_gwt_test() {
         try {
             gwt.test()
-                    .when(doing_something)
+                    .when(doing_something_that_results_in_an_exception)
                     .then(an_exception_is_thrown_and_caught);
             Assertions.fail();
         }
@@ -52,8 +59,28 @@ public class ExceptionTest {
         }
     }
 
-    private final GwtFunction<ExceptionContext> doing_something = context -> {
+    @Test
+    void unexpected_error_is_thrown_in_the_test_and_rethrown_by_gwt_test() {
+        try {
+            gwt.test()
+                    .when(doing_something_that_results_in_an_error)
+                    .then(an_exception_is_thrown_and_caught);
+            Assertions.fail();
+        }
+        catch (UnexpectedExceptionCaughtException e) {
+            // Test succeeds if this exception is thrown/
+        }
+        catch (Throwable e) {
+            Assertions.fail();
+        }
+    }
+
+    private final GwtFunction<ExceptionContext> doing_something_that_results_in_an_exception = context -> {
         throw new RuntimeException("An error occurred while doing something.");
+    };
+
+    private final GwtFunction<ExceptionContext> doing_something_that_results_in_an_error = context -> {
+        throw new Error("An error occurred while doing something.");
     };
 
     private final GwtFunction<ExceptionContext> an_exception_is_thrown_and_caught = context -> assertNotNull(context.thrownException);

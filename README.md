@@ -24,19 +24,19 @@ To use gwt-test, include it as a dependency as follows:
 <dependency>
     <groupId>io.github.mmbishop</groupId>
     <artifactId>gwt-test</artifactId>
-    <version>1.3.0</version>
+    <version>1.3.1</version>
     <scope>test</scope>
 </dependency>
 ```
 
 **Gradle**
 ```
-testImplementation 'io.github.mmbishop:gwt-test:1.3.0'
+testImplementation 'io.github.mmbishop:gwt-test:1.3.1'
 ```
 
 **sbt**
 ```
-"io.github.mmbishop" % "gwt-test" % "1.3.0" % Test
+"io.github.mmbishop" % "gwt-test" % "1.3.1" % Test
 ```
 
 ## Language Support

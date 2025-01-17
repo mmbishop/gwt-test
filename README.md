@@ -233,6 +233,8 @@ If an exception is thrown during the test, gwt-test will check if the thrown exc
 that is expected, or no expected exception class has been declared, gwt-test will soften the exception by wrapping it in an instance of
 ```UnexpectedExceptionCaughtException``` and throw it.
 
+If an exception is declared via ```expectingException``` but no exception is thrown during the test, the test will fail.
+
 The base [Context](src/main/java/io/github/mmbishop/gwttest/model/Context.java) class has a property called ```thrownException``` that stores any exception that is
 thrown during the execution of a test. To check if an expected exception was thrown, you can simply check that property. For example,
 

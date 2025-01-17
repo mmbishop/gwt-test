@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - The ```thrownException``` member of Context has been changed to a ```Throwable``` so that ```Error```s can also be declared
   as expected in a test.
+- When an exception is declared via ```expectingException``` but no exception was thrown during the test, the test was passing.
 
 ## 1.3.0 - 2024-12-27
 

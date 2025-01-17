@@ -310,6 +310,11 @@ public class GwtTest<T extends Context> {
     private <V> void invokeGwtFunction(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
         try {
             gwtFunction.apply(context, arg);
+            ifInWhenPhaseAndExpectedExceptionWasDeclaredThenFailTheTest();
+        }
+        catch (ExpectedExceptionNotThrownException e) {
+            logger.error("Expected exception " + context.expectedExceptionClass.getName() + " was not thrown.");
+            throw e;
         }
         catch (Throwable e) {
             context.thrownException = e;
@@ -322,6 +327,11 @@ public class GwtTest<T extends Context> {
     private <V> void invokeGwtFunction(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
         try {
             gwtFunction.apply(context, args);
+            ifInWhenPhaseAndExpectedExceptionWasDeclaredThenFailTheTest();
+        }
+        catch (ExpectedExceptionNotThrownException e) {
+            logger.error("Expected exception " + context.expectedExceptionClass.getName() + " was not thrown.");
+            throw e;
         }
         catch (Throwable e) {
             context.thrownException = e;
@@ -334,6 +344,11 @@ public class GwtTest<T extends Context> {
     private void invokeGwtFunctions(GwtFunction<T>... gwtFunctions) {
         try {
             Arrays.stream(gwtFunctions).forEach(f -> f.apply(context));
+            ifInWhenPhaseAndExpectedExceptionWasDeclaredThenFailTheTest();
+        }
+        catch (ExpectedExceptionNotThrownException e) {
+            logger.error("Expected exception " + context.expectedExceptionClass.getName() + " was not thrown.");
+            throw e;
         }
         catch (Throwable e) {
             context.thrownException = e;
@@ -354,6 +369,12 @@ public class GwtTest<T extends Context> {
     private void throwCaughtExceptionIfNotExpected(Throwable e) {
         if (context.expectedExceptionClass == null || !context.expectedExceptionClass.equals(e.getClass())) {
             throw new UnexpectedExceptionCaughtException(e);
+        }
+    }
+
+    private void ifInWhenPhaseAndExpectedExceptionWasDeclaredThenFailTheTest() {
+        if (context.testPhase.equals(TestPhase.WHEN) && context.expectedExceptionClass != null) {
+            throw new ExpectedExceptionNotThrownException(context.expectedExceptionClass);
         }
     }
 

@@ -259,6 +259,8 @@ The following are trivial but valid examples of a test class that uses gwt-test.
 - [Scala](doc/scala-example.md)
 - [Kotlin](doc/kotlin-example.md)
 
+You can see more Java examples of unit tests that are written with gwt-test in the [unit test package](src/test/java/io/github/mmbishop/gwttest).
+
 Note: The JUnit and Hamcrest dependencies supporting the imports in the example are test-scoped in the gwt-test library, so you won't get them as 
 transitive dependencies. They are not required (though JUnit will almost certainly be needed), but if you want those dependencies you will need to declare them 
 in your project. Hamcrest is recommended as its matcher methods are very useful for writing assertions.
@@ -269,10 +271,6 @@ You've probably noticed that the test method and function names are specified us
 snake case in my test classes because it's possible that I may need to ask a domain expert or business analyst to look at a test
 to make sure I'm covering all of the cases. They are much more likely to want to read snake case than camel case. All I would ask them to read is the test
 methods (those annotated with @Test). Any other supporting methods I write will be named using camel case since I expect only developers to look at that code.
-
-## Examples
-
-You can see examples of unit tests that are written with gwt-test in the [unit test package](src/test/java/io/github/mmbishop/gwttest).
 
 ## Logging
 

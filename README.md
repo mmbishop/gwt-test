@@ -230,7 +230,7 @@ gwt.test().expectingException(ExpectedExceptionClass.class)
 ```
 
 If an exception is thrown during the test, gwt-test will check if the thrown exception is an instance of the expected exception class 
-(ExpectedExceptionClass in this example) or one of its subclasses. If it is, then the test continues. If the thrown exception is of a different class 
+(ExpectedExceptionClass in this example). If it is, then the test continues. If the thrown exception is of a different class 
 from the one that is expected, or no expected exception class has been declared, gwt-test will soften the exception by wrapping it in an instance of
 ```UnexpectedExceptionCaughtException``` and throw it, which will result in the test failing.
 

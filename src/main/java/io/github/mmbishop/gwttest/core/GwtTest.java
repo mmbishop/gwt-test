@@ -93,7 +93,7 @@ public class GwtTest<T extends Context> {
         throw new MalformedTestException("Can't call test() more than once.");
     }
 
-    public GwtTest<T> expectingException(Class<? extends Exception> expectedExceptionClass) {
+    public GwtTest<T> expectingException(Class<? extends Throwable> expectedExceptionClass) {
         context.expectedExceptionClass = expectedExceptionClass;
         return this;
     }
@@ -218,6 +218,7 @@ public class GwtTest<T extends Context> {
     @SafeVarargs
     public final GwtTest<T> then(GwtFunction<T>... gwtFunctions) {
         testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.THEN);
+        ifExpectedExceptionWasDeclaredButNotThrownThenFailTheTest();
         context.testPhase = TestPhase.THEN;
         invokeGwtFunctions(gwtFunctions);
         return this;
@@ -237,6 +238,7 @@ public class GwtTest<T extends Context> {
      */
     public final <V> GwtTest<T> then(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
         testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.THEN);
+        ifExpectedExceptionWasDeclaredButNotThrownThenFailTheTest();
         context.testPhase = TestPhase.THEN;
         invokeGwtFunction(gwtFunction, arg);
         return this;
@@ -256,6 +258,7 @@ public class GwtTest<T extends Context> {
     @SafeVarargs
     public final <V> GwtTest<T> then(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
         testPhaseValidator.validatePhaseTransition(context.testPhase, TestPhase.THEN);
+        ifExpectedExceptionWasDeclaredButNotThrownThenFailTheTest();
         context.testPhase = TestPhase.THEN;
         invokeGwtFunction(gwtFunction, args);
         return this;
@@ -311,7 +314,7 @@ public class GwtTest<T extends Context> {
         try {
             gwtFunction.apply(context, arg);
         }
-        catch (Exception e) {
+        catch (Throwable e) {
             context.thrownException = e;
             logger.error(e.getMessage(), e);
             throwCaughtExceptionIfNotExpected(e);
@@ -323,7 +326,7 @@ public class GwtTest<T extends Context> {
         try {
             gwtFunction.apply(context, args);
         }
-        catch (Exception e) {
+        catch (Throwable e) {
             context.thrownException = e;
             logger.error(e.getMessage(), e);
             throwCaughtExceptionIfNotExpected(e);
@@ -335,7 +338,7 @@ public class GwtTest<T extends Context> {
         try {
             Arrays.stream(gwtFunctions).forEach(f -> f.apply(context));
         }
-        catch (Exception e) {
+        catch (Throwable e) {
             context.thrownException = e;
             logger.error(e.getMessage(), e);
             throwCaughtExceptionIfNotExpected(e);
@@ -351,9 +354,15 @@ public class GwtTest<T extends Context> {
         return callingMethodName.orElse("unknown");
     }
 
-    private void throwCaughtExceptionIfNotExpected(Exception e) {
+    private void throwCaughtExceptionIfNotExpected(Throwable e) {
         if (context.expectedExceptionClass == null || !context.expectedExceptionClass.equals(e.getClass())) {
             throw new UnexpectedExceptionCaughtException(e);
+        }
+    }
+
+    private void ifExpectedExceptionWasDeclaredButNotThrownThenFailTheTest() {
+        if (context.expectedExceptionClass != null && context.thrownException == null) {
+            throw new ExpectedExceptionNotThrownException(context.expectedExceptionClass);
         }
     }
 

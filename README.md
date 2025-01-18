@@ -9,6 +9,7 @@ Given-When-Then testing framework for Java, with support for Groovy, Scala and K
 [Background](#background)  
 [Writing Tests Using gwt-test](#writing-tests-using-gwt-test)  
 [Elements of gwt-test](#elements-of-gwt-test)  
+[Exception handling](#exception-handling)  
 [Example Test Classes Using gwt-test](#example-test-classes-using-gwt-test)  
 [Logging](#logging)  
 [See Also](#see-also)
@@ -24,19 +25,19 @@ To use gwt-test, include it as a dependency as follows:
 <dependency>
     <groupId>io.github.mmbishop</groupId>
     <artifactId>gwt-test</artifactId>
-    <version>1.3.0</version>
+    <version>1.3.1</version>
     <scope>test</scope>
 </dependency>
 ```
 
 **Gradle**
 ```
-testImplementation 'io.github.mmbishop:gwt-test:1.3.0'
+testImplementation 'io.github.mmbishop:gwt-test:1.3.1'
 ```
 
 **sbt**
 ```
-"io.github.mmbishop" % "gwt-test" % "1.3.0" % Test
+"io.github.mmbishop" % "gwt-test" % "1.3.1" % Test
 ```
 
 ## Language Support
@@ -219,19 +220,21 @@ void numbers_can_be_multiplied_and_divided() {
 }
 ```
 
-#### Exception handling
+## Exception handling
 
-Any exception thrown during a test will be caught and rethrown by gwt-test unless the exception class is declared as an expected exception.
-To declare an exception as expected, use the ```expectingException``` method as follows:
+Any exception thrown during a test will be caught and rethrown by gwt-test (in which case the test fails) unless the exception class is declared as an 
+expected exception. To declare an exception as expected, use the ```expectingException``` method as follows:
 
 ```
 gwt.test().expectingException(ExpectedExceptionClass.class)
 ```
 
-If an exception is thrown during the test, gwt-test will check if the thrown exception class is of the expected exception class
-(ExpectedExceptionClass in this example). If it is, then the test continues. If the thrown exception is of a different class from the one
-that is expected, or no expected exception class has been declared, gwt-test will soften the exception by wrapping it in an instance of
-```UnexpectedExceptionCaughtException``` and throw it.
+If an exception is thrown during the test, gwt-test will check if the thrown exception is an instance of the expected exception class 
+(ExpectedExceptionClass in this example). If it is, then the test continues. If the thrown exception is of a different class 
+from the one that is expected, or no expected exception class has been declared, gwt-test will soften the exception by wrapping it in an instance of
+```UnexpectedExceptionCaughtException``` and throw it, which will result in the test failing.
+
+If an exception is declared via ```expectingException``` but no exception is thrown during the test, the test will fail.
 
 The base [Context](src/main/java/io/github/mmbishop/gwttest/model/Context.java) class has a property called ```thrownException``` that stores any exception that is
 thrown during the execution of a test. To check if an expected exception was thrown, you can simply check that property. For example,
@@ -256,6 +259,8 @@ The following are trivial but valid examples of a test class that uses gwt-test.
 - [Scala](doc/scala-example.md)
 - [Kotlin](doc/kotlin-example.md)
 
+You can see more Java examples of unit tests that are written with gwt-test in the [unit test package](src/test/java/io/github/mmbishop/gwttest).
+
 Note: The JUnit and Hamcrest dependencies supporting the imports in the example are test-scoped in the gwt-test library, so you won't get them as 
 transitive dependencies. They are not required (though JUnit will almost certainly be needed), but if you want those dependencies you will need to declare them 
 in your project. Hamcrest is recommended as its matcher methods are very useful for writing assertions.
@@ -266,10 +271,6 @@ You've probably noticed that the test method and function names are specified us
 snake case in my test classes because it's possible that I may need to ask a domain expert or business analyst to look at a test
 to make sure I'm covering all of the cases. They are much more likely to want to read snake case than camel case. All I would ask them to read is the test
 methods (those annotated with @Test). Any other supporting methods I write will be named using camel case since I expect only developers to look at that code.
-
-## Examples
-
-You can see examples of unit tests that are written with gwt-test in the [unit test package](src/test/java/io/github/mmbishop/gwttest).
 
 ## Logging
 

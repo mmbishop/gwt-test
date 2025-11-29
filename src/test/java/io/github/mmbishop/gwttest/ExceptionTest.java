@@ -16,9 +16,9 @@
 
 package io.github.mmbishop.gwttest;
 
-import io.github.mmbishop.gwttest.core.ExpectedExceptionNotThrownException;
+import io.github.mmbishop.gwttest.core.exceptions.ExpectedExceptionNotThrownException;
 import io.github.mmbishop.gwttest.core.GwtTest;
-import io.github.mmbishop.gwttest.core.UnexpectedExceptionCaughtException;
+import io.github.mmbishop.gwttest.core.exceptions.UnexpectedExceptionCaughtException;
 import io.github.mmbishop.gwttest.functions.GwtFunction;
 import io.github.mmbishop.gwttest.model.Context;
 import org.junit.jupiter.api.Assertions;

@@ -16,6 +16,7 @@
 
 package io.github.mmbishop.gwttest.core;
 
+import io.github.mmbishop.gwttest.core.exceptions.MalformedTestException;
 import io.github.mmbishop.gwttest.model.TestPhase;
 
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package io.github.mmbishop.gwttest.core;
+package io.github.mmbishop.gwttest.core.exceptions;
 
 public class ExpectedExceptionNotThrownException extends RuntimeException {
 

@@ -16,6 +16,10 @@
 
 package io.github.mmbishop.gwttest.core;
 
+import io.github.mmbishop.gwttest.core.exceptions.ExpectedExceptionNotThrownException;
+import io.github.mmbishop.gwttest.core.exceptions.MalformedTestException;
+import io.github.mmbishop.gwttest.core.exceptions.TestConstructionException;
+import io.github.mmbishop.gwttest.core.exceptions.UnexpectedExceptionCaughtException;
 import io.github.mmbishop.gwttest.functions.GwtFunction;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;

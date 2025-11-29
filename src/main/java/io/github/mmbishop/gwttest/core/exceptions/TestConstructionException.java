@@ -14,15 +14,16 @@
  * limitations under the License.
  */
 
-package io.github.mmbishop.gwttest.core;
+package io.github.mmbishop.gwttest.core.exceptions;
 
 /**
- * An exception that is thrown when a GWT test is malformed (e.g., given invoked after when).
+ * An exception that is thrown when a GWT test can't be constructed. This typically happens when a test's
+ * context class is not public and thus is not accessible to instantiate.
  */
-public class MalformedTestException extends RuntimeException {
+public class TestConstructionException extends RuntimeException {
 
-    public MalformedTestException(String message) {
-        super(message);
+    public TestConstructionException(String message, Throwable cause) {
+        super(message, cause);
     }
 
 }

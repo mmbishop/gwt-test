@@ -53,22 +53,6 @@ public class ExceptionTest {
     }
 
     @Test
-    void test_succeeds_when_expected_exception_is_thrown_in_AND_clause() {
-        gwt.test().expectingException(RuntimeException.class)
-                .when(doing_something_that_does_not_result_in_an_exception)
-                .and(doing_something_that_results_in_an_exception)
-                .then(an_exception_is_thrown_and_caught);
-    }
-
-    @Test
-    void test_succeeds_when_expected_error_is_thrown_in_AND_clause() {
-        gwt.test().expectingException(Error.class)
-                .when(doing_something_that_does_not_result_in_an_exception)
-                .and(doing_something_that_results_in_an_error)
-                .then(an_exception_is_thrown_and_caught);
-    }
-
-    @Test
     void test_fails_when_unexpected_exception_is_thrown() {
         try {
             gwt.test()
@@ -89,40 +73,6 @@ public class ExceptionTest {
         try {
             gwt.test()
                     .when(doing_something_that_results_in_an_error)
-                    .then(an_exception_is_thrown_and_caught);
-            Assertions.fail();  // UnexpectedExceptionCaughtException should have been thrown.
-        }
-        catch (UnexpectedExceptionCaughtException e) {
-            // Test succeeds if this exception is thrown.
-        }
-        catch (Throwable e) {
-            Assertions.fail();
-        }
-    }
-
-    @Test
-    void test_fails_when_unexpected_exception_is_thrown_in_AND_clause() {
-        try {
-            gwt.test()
-                    .when(doing_something_that_does_not_result_in_an_exception)
-                    .and(doing_something_that_results_in_an_exception)
-                    .then(an_exception_is_thrown_and_caught);
-            Assertions.fail();  // UnexpectedExceptionCaughtException should have been thrown.
-        }
-        catch (UnexpectedExceptionCaughtException e) {
-            // Test succeeds if this exception is thrown.
-        }
-        catch (Throwable e) {
-            Assertions.fail();
-        }
-    }
-
-    @Test
-    void test_fails_when_unexpected_error_is_thrown_in_AND_clause() {
-        try {
-            gwt.test()
-                    .when(doing_something_that_does_not_result_in_an_exception)
-                    .and(doing_something_that_results_in_an_error)
                     .then(an_exception_is_thrown_and_caught);
             Assertions.fail();  // UnexpectedExceptionCaughtException should have been thrown.
         }

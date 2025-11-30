@@ -13,7 +13,7 @@ public class ConstructedGwtTest<T extends Context> {
 
     public ConstructedGwtTest(T context) {
         this.context = context;
-        this.functionInvoker = new FunctionInvoker<T>(context);
+        this.functionInvoker = new FunctionInvoker<>(context);
     }
 
     public ConstructedGwtTest<T> expectingException(Class<? extends Throwable> expectedExceptionClass) {

@@ -1,17 +1,12 @@
 package io.github.mmbishop.gwttest.core.test;
 
-import io.github.mmbishop.gwttest.core.GwtTest;
 import io.github.mmbishop.gwttest.functions.GwtFunction;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
 import io.github.mmbishop.gwttest.model.Context;
 import io.github.mmbishop.gwttest.model.TestPhase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class PreconditionedGwtTest<T extends Context> {
-
-    private static final Logger logger = LoggerFactory.getLogger(PreconditionedGwtTest.class);
 
     private final T context;
     private final FunctionInvoker<T> functionInvoker;

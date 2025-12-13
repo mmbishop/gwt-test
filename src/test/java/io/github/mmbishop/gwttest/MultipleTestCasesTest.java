@@ -17,50 +17,38 @@
 package io.github.mmbishop.gwttest;
 
 import io.github.mmbishop.gwttest.core.GwtTest;
-import io.github.mmbishop.gwttest.core.exceptions.MalformedTestException;
-import io.github.mmbishop.gwttest.functions.GwtFunction;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
-import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
 import io.github.mmbishop.gwttest.model.Context;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.not;
 
 public class MultipleTestCasesTest {
 
     @Test
     void test_has_multiple_cases() {
         gwt.test()
-                .given(numbers, 12, 4)
-                .when(multiplying_the_numbers)
-                .then(the_product_is, 48)
-                .when(dividing_the_numbers)
-                .then(the_quotient_is, 3);
+                .given(a_number, 12)
+                .when(multiplying_by, 3)
+                .then(the_product_is, 36)
+                .when(multiplying_by, 4)
+                .then(the_product_is, 48);
     }
-
-    private MalformedTestException thrownException;
 
     private final GwtTest<MultipleCasesTestContext> gwt = new GwtTest<>(MultipleCasesTestContext.class);
 
-    private final GwtFunctionWithArguments<MultipleCasesTestContext, Integer> numbers = (context, args) -> context.numbers = args;
+    private final GwtFunctionWithArgument<MultipleCasesTestContext, Integer> a_number =
+            (context, arg) -> context.number = arg;
 
-    private final GwtFunction<MultipleCasesTestContext> multiplying_the_numbers
-            = context -> context.result = context.numbers[0] * context.numbers[1];
+    private final GwtFunctionWithArgument<MultipleCasesTestContext, Integer> multiplying_by =
+            (context, arg) -> context.result = context.number * arg;
 
-    private final GwtFunction<MultipleCasesTestContext> dividing_the_numbers
-            = context -> context.result = context.numbers[0] / context.numbers[1];
-
-    private final GwtFunctionWithArgument<MultipleCasesTestContext, Integer> the_product_is
-            = (context, expectedProduct) -> assertThat(context.result, is(expectedProduct));
-
-    private final GwtFunctionWithArgument<MultipleCasesTestContext, Integer> the_quotient_is
-            = (context, expectedQuotient) -> assertThat(context.result, is(expectedQuotient));
+    private final GwtFunctionWithArgument<MultipleCasesTestContext, Integer> the_product_is =
+            (context, expectedProduct) -> assertThat(context.result, is(expectedProduct));
 
     public static class MultipleCasesTestContext extends Context {
-        Integer[] numbers;
+        Integer number;
         Integer result;
     }
 }

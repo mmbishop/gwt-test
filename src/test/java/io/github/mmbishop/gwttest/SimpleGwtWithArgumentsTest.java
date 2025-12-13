@@ -38,9 +38,8 @@ public class SimpleGwtWithArgumentsTest {
                 .then(the_calculated_product_is, 24);
     }
 
-    private final GwtFunctionWithArguments<TestContext, Integer> numbers = (context, numbers) -> {
-        context.numbers = numbers;
-    };
+    private final GwtFunctionWithArguments<TestContext, Integer> numbers =
+            (context, numbers) -> context.numbers = numbers;
 
     private final GwtFunction<TestContext> multiplying_the_numbers_together = context -> {
         context.product = 1;
@@ -49,9 +48,8 @@ public class SimpleGwtWithArgumentsTest {
         }
     };
 
-    private final GwtFunctionWithArgument<TestContext, Integer> the_calculated_product_is = (context, expectedResult) -> {
-        assertThat(context.product, is(expectedResult));
-    };
+    private final GwtFunctionWithArgument<TestContext, Integer> the_calculated_product_is =
+            (context, expectedResult) -> assertThat(context.product, is(expectedResult));
 
     public static class TestContext extends Context {
         Integer[] numbers;

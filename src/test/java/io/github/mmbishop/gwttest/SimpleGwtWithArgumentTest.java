@@ -77,9 +77,9 @@ public class SimpleGwtWithArgumentTest {
     private final GwtFunctionWithArgument<TestContext, String> concatenating_the_string
             = (context, arg) -> context.stringResult = context.stringArgument + arg;
 
-    private final GwtFunctionWithArgument<TestContext, Offset> translating_the_point_by = (context, offset) -> {
-        context.pointResult = new Point(context.pointArgument.x() + offset.dx(), context.pointArgument.y() + offset.dy());
-    };
+    private final GwtFunctionWithArgument<TestContext, Offset> translating_the_point_by =
+            (context, offset) ->
+                    context.pointResult = new Point(context.pointArgument.x() + offset.dx(), context.pointArgument.y() + offset.dy());
 
     private final GwtFunctionWithArgument<TestContext, Double> the_double_precision_result_is
             = (context, expectedResult) -> assertThat(context.doubleResult, is(expectedResult));

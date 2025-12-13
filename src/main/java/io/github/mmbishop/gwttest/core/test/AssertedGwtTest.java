@@ -4,16 +4,17 @@ import io.github.mmbishop.gwttest.functions.GwtFunction;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
 import io.github.mmbishop.gwttest.model.Context;
-import io.github.mmbishop.gwttest.model.TestPhase;
 
 public class AssertedGwtTest<T extends Context> {
 
     private final T context;
     private final FunctionInvoker<T> functionInvoker;
+    private final WhenClauseExecutor<T> whenClauseExecutor;
 
     public AssertedGwtTest(T context) {
         this.context = context;
         this.functionInvoker = new FunctionInvoker<>(context);
+        this.whenClauseExecutor = new WhenClauseExecutor<>(context);
     }
 
     /**
@@ -61,9 +62,7 @@ public class AssertedGwtTest<T extends Context> {
      */
     @SafeVarargs
     public final ExecutedGwtTest<T> when(GwtFunction<T>... gwtFunctions) {
-        context.testPhase = TestPhase.WHEN;
-        functionInvoker.invokeGwtFunctions(gwtFunctions);
-        return new ExecutedGwtTest<>(context);
+        return whenClauseExecutor.executeWhenClause(gwtFunctions);
     }
 
     /**
@@ -74,9 +73,7 @@ public class AssertedGwtTest<T extends Context> {
      * @return this {@code ExecutedGwtTest} object
      */
     public final <V> ExecutedGwtTest<T> when(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
-        context.testPhase = TestPhase.WHEN;
-        functionInvoker.invokeGwtFunction(gwtFunction, arg);
-        return new ExecutedGwtTest<>(context);
+        return whenClauseExecutor.executeWhenClause(gwtFunction, arg);
     }
 
     /**
@@ -88,9 +85,7 @@ public class AssertedGwtTest<T extends Context> {
      */
     @SafeVarargs
     public final <V> ExecutedGwtTest<T> when(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
-        context.testPhase = TestPhase.WHEN;
-        functionInvoker.invokeGwtFunction(gwtFunction, args);
-        return new ExecutedGwtTest<>(context);
+        return whenClauseExecutor.executeWhenClause(gwtFunction, args);
     }
 
 }

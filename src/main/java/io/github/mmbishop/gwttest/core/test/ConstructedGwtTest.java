@@ -10,10 +10,12 @@ public class ConstructedGwtTest<T extends Context> {
 
     private final T context;
     private final FunctionInvoker<T> functionInvoker;
+    private final WhenClauseExecutor<T> whenClauseExecutor;
 
     public ConstructedGwtTest(T context) {
         this.context = context;
         this.functionInvoker = new FunctionInvoker<>(context);
+        this.whenClauseExecutor = new WhenClauseExecutor<>(context);
     }
 
     public ConstructedGwtTest<T> expectingException(Class<? extends Throwable> expectedExceptionClass) {
@@ -67,9 +69,7 @@ public class ConstructedGwtTest<T extends Context> {
      */
     @SafeVarargs
     public final ExecutedGwtTest<T> when(GwtFunction<T>... gwtFunctions) {
-        context.testPhase = TestPhase.WHEN;
-        functionInvoker.invokeGwtFunctions(gwtFunctions);
-        return new ExecutedGwtTest<>(context);
+        return whenClauseExecutor.executeWhenClause(gwtFunctions);
     }
 
     /**
@@ -80,9 +80,7 @@ public class ConstructedGwtTest<T extends Context> {
      * @return this {@code ExecutedGwtTest} object
      */
     public final <V> ExecutedGwtTest<T> when(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
-        context.testPhase = TestPhase.WHEN;
-        functionInvoker.invokeGwtFunction(gwtFunction, arg);
-        return new ExecutedGwtTest<>(context);
+        return whenClauseExecutor.executeWhenClause(gwtFunction, arg);
     }
 
     /**
@@ -94,9 +92,7 @@ public class ConstructedGwtTest<T extends Context> {
      */
     @SafeVarargs
     public final <V> ExecutedGwtTest<T> when(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
-        context.testPhase = TestPhase.WHEN;
-        functionInvoker.invokeGwtFunction(gwtFunction, args);
-        return new ExecutedGwtTest<>(context);
+        return whenClauseExecutor.executeWhenClause(gwtFunction, args);
     }
 
 }

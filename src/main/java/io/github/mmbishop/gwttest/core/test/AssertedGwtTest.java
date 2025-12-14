@@ -56,6 +56,44 @@ public class AssertedGwtTest<T extends Context> {
     }
 
     /**
+     * Invokes the given function with the context object.
+     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of a But clause attached
+     *                                       to a Then
+     * @return this {@code AssertedGwtTest} object
+     */
+    public final AssertedGwtTest<T> but(GwtFunction<T> gwtFunction) {
+        functionInvoker.invokeGwtFunctions(gwtFunction);
+        return this;
+    }
+
+    /**
+     * Invokes the given function on the given argument and context object.
+     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of a But clause attached
+     *                                       to a Then.  This function takes an argument of type {@code V}
+     *                                       and an instance of a subclass of {@link Context}.
+     * @param arg an argument of type {@code V}
+     * @return this {@code AssertedGwtTest} object
+     */
+    public final <V> AssertedGwtTest<T> but(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
+        functionInvoker.invokeGwtFunction(gwtFunction, arg);
+        return this;
+    }
+
+    /**
+     * Invokes the given function on the given argument and context object.
+     * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of a But clause attached
+     *                                       to a Then.  This function takes an argument of type {@code V}
+     *                                       and an instance of a subclass of {@link Context}.
+     * @param args arguments of type {@code V}
+     * @return this {@code AssertedGwtTest} object
+     */
+    @SafeVarargs
+    public final <V> AssertedGwtTest<T> but(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
+        functionInvoker.invokeGwtFunction(gwtFunction, args);
+        return this;
+    }
+
+    /**
      * Invokes the given functions with the context object.
      * @param gwtFunctions {@code GwtFunction}s that contain logic to be performed as part of the When clause
      * @return this {@code ExecutedGwtTest} object

@@ -6,6 +6,13 @@ import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
 import io.github.mmbishop.gwttest.model.Context;
 import io.github.mmbishop.gwttest.model.TestPhase;
 
+/**
+ * Executes the When clause of a Given-When-Then test. This class provides methods to execute
+ * When clause logic with various types of functions and arguments, transitioning the test from
+ * the Given phase to the When phase and preparing it for the Then phase.
+ *
+ * @param <T> a subclass of {@link Context} that contains the fields used in test code
+ */
 public class WhenClauseExecutor<T extends Context> {
 
     private final T context;
@@ -33,6 +40,7 @@ public class WhenClauseExecutor<T extends Context> {
      * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause. This function takes
      *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
      * @param arg an argument of type {@code V}
+     * @param <V> the type of the argument
      * @return an {@code ExecutedGwtTest} object
      */
     public final <V> ExecutedGwtTest<T> executeWhenClause(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
@@ -46,6 +54,7 @@ public class WhenClauseExecutor<T extends Context> {
      * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause. This function takes
      *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
      * @param args arguments of type {@code V}
+     * @param <V> the type of the argument
      * @return this {@code ExecutedGwtTest} object
      */
     @SafeVarargs

@@ -21,6 +21,11 @@ package io.github.mmbishop.gwttest.core.exceptions;
  */
 public class MalformedTestException extends RuntimeException {
 
+    /**
+     * Constructs a new MalformedTestException with the specified detail message.
+     *
+     * @param message the detail message explaining why the test is malformed
+     */
     public MalformedTestException(String message) {
         super(message);
     }

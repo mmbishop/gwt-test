@@ -5,14 +5,29 @@ import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
 import io.github.mmbishop.gwttest.model.Context;
 
+/**
+ * Represents a GWT test that has executed assertion logic in the Then phase.
+ * This class provides methods to chain additional assertions using "and" and "but" clauses,
+ * or to execute subsequent When clauses for multi-step test scenarios.
+ *
+ * @param <T> a subclass of {@link Context} that contains the fields used in test code
+ */
 public class AssertedGwtTest<T extends Context> {
 
-    private final T context;
     private final FunctionInvoker<T> functionInvoker;
     private final WhenClauseExecutor<T> whenClauseExecutor;
 
+    /**
+     * Constructs an AssertedGwtTest with the given context.
+     * <p>
+     * This constructor initializes the test in the asserted state, typically after
+     * assertions have been executed in the Then phase. It sets up internal components
+     * to support chaining additional assertions via {@code and()} and {@code but()}
+     * methods, or to execute subsequent When clauses for multi-step test scenarios.
+     *
+     * @param context the context object of type {@code T} that contains the fields and state used in the test
+     */
     public AssertedGwtTest(T context) {
-        this.context = context;
         this.functionInvoker = new FunctionInvoker<>(context);
         this.whenClauseExecutor = new WhenClauseExecutor<>(context);
     }
@@ -34,6 +49,7 @@ public class AssertedGwtTest<T extends Context> {
      *                                       to a Given, When or Then.  This function takes an argument of type {@code V}
      *                                       and an instance of a subclass of {@link Context}.
      * @param arg an argument of type {@code V}
+     * @param <V> the type of the argument
      * @return this {@code AssertedGwtTest} object
      */
     public final <V> AssertedGwtTest<T> and(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
@@ -47,6 +63,7 @@ public class AssertedGwtTest<T extends Context> {
      *                                       to a Given, When or Then.  This function takes an argument of type {@code V}
      *                                       and an instance of a subclass of {@link Context}.
      * @param args arguments of type {@code V}
+     * @param <V> the type of the argument
      * @return this {@code AssertedGwtTest} object
      */
     @SafeVarargs
@@ -72,6 +89,7 @@ public class AssertedGwtTest<T extends Context> {
      *                                       to a Then.  This function takes an argument of type {@code V}
      *                                       and an instance of a subclass of {@link Context}.
      * @param arg an argument of type {@code V}
+     * @param <V> the type of the argument
      * @return this {@code AssertedGwtTest} object
      */
     public final <V> AssertedGwtTest<T> but(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
@@ -85,6 +103,7 @@ public class AssertedGwtTest<T extends Context> {
      *                                       to a Then.  This function takes an argument of type {@code V}
      *                                       and an instance of a subclass of {@link Context}.
      * @param args arguments of type {@code V}
+     * @param <V> the type of the argument
      * @return this {@code AssertedGwtTest} object
      */
     @SafeVarargs
@@ -108,6 +127,7 @@ public class AssertedGwtTest<T extends Context> {
      * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause. This function takes
      *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
      * @param arg an argument of type {@code V}
+     * @param <V> the type of the argument
      * @return this {@code ExecutedGwtTest} object
      */
     public final <V> ExecutedGwtTest<T> when(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
@@ -119,6 +139,7 @@ public class AssertedGwtTest<T extends Context> {
      * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause. This function takes
      *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
      * @param args arguments of type {@code V}
+     * @param <V> the type of the argument
      * @return this {@code ExecutedGwtTest} object
      */
     @SafeVarargs

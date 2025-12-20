@@ -5,11 +5,37 @@ import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
 import io.github.mmbishop.gwttest.model.Context;
 
+/**
+ * Represents a Given-When-Then test that has preconditions (Given clauses) already defined.
+ * <p>
+ * This class is returned by {@link ConstructedGwtTest#given(GwtFunction[])} and related methods
+ * after preconditions have been established. It provides methods to:
+ * <ul>
+ *   <li>Execute test actions using {@code when()} methods to transition to the When phase</li>
+ *   <li>Chain additional preconditions using {@code and()} methods</li>
+ * </ul>
+ * <p>
+ * The class supports method chaining to build fluent test definitions, and handles both
+ * simple functions and functions with arguments for flexibility in test construction.
+ * Once {@code when()} is invoked, the test transitions to the {@link ExecutedGwtTest} phase
+ * where assertions can be made.
+ *
+ * @param <T> a subclass of {@link Context} that contains the fields used in test code
+ */
 public class PreconditionedGwtTest<T extends Context> {
 
     private final FunctionInvoker<T> functionInvoker;
     private final WhenClauseExecutor<T> whenClauseExecutor;
 
+    /**
+     * Constructs a new PreconditionedGwtTest with the specified context.
+     * <p>
+     * This constructor initializes the function invoker and when clause executor
+     * with the provided context, preparing the test for executing additional
+     * preconditions or transitioning to the When phase.
+     *
+     * @param context the context object containing the fields used in test code
+     */
     public PreconditionedGwtTest(T context) {
         this.functionInvoker = new FunctionInvoker<>(context);
         this.whenClauseExecutor = new WhenClauseExecutor<>(context);
@@ -30,6 +56,7 @@ public class PreconditionedGwtTest<T extends Context> {
      * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause. This function takes
      *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
      * @param arg an argument of type {@code V}
+     * @param <V> the type of the argument
      * @return an {@code ExecutedGwtTest} object
      */
     public final <V> ExecutedGwtTest<T> when(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
@@ -41,6 +68,7 @@ public class PreconditionedGwtTest<T extends Context> {
      * @param gwtFunction {@code GwtFunction} that contains logic to be performed as part of the When clause. This function takes
      *                                       an argument of type {@code V} and an instance of a subclass of {@link Context}.
      * @param args arguments of type {@code V}
+     * @param <V> the type of the argument
      * @return this {@code ExecutedGwtTest} object
      */
     @SafeVarargs
@@ -65,6 +93,7 @@ public class PreconditionedGwtTest<T extends Context> {
      *                                       to a Given, When or Then.  This function takes an argument of type {@code V}
      *                                       and an instance of a subclass of {@link Context}.
      * @param arg an argument of type {@code V}
+     * @param <V> the type of the argument
      * @return this {@code PreconditionedGwtTest} object
      */
     public final <V> PreconditionedGwtTest<T> and(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
@@ -78,6 +107,7 @@ public class PreconditionedGwtTest<T extends Context> {
      *                                       to a Given, When or Then.  This function takes an argument of type {@code V}
      *                                       and an instance of a subclass of {@link Context}.
      * @param args arguments of type {@code V}
+     * @param <V> the type of the argument
      * @return this {@code PreconditionedGwtTest} object
      */
     @SafeVarargs

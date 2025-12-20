@@ -26,6 +26,15 @@ import io.github.mmbishop.gwttest.model.Context;
 @FunctionalInterface
 public interface GwtFunction<T extends Context> {
 
+    /**
+     * Applies this function to the given context.
+     * <p>
+     * This method is invoked by the GWT test framework when this function is executed as part of
+     * a {@code given}, {@code when}, {@code then}, or {@code and} clause. Implementations should
+     * contain the test logic appropriate for the phase in which they are used.
+     *
+     * @param context the context object containing the state and data for the test
+     */
     void apply(T context);
 
 }

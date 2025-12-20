@@ -22,6 +22,15 @@ package io.github.mmbishop.gwttest.core.exceptions;
  */
 public class TestConstructionException extends RuntimeException {
 
+    /**
+     * Constructs a new TestConstructionException with the specified detail message and cause.
+     * <p>
+     * This constructor is typically used when a GWT test cannot be constructed due to an
+     * underlying exception, such as when a test's context class is not accessible for instantiation.
+     *
+     * @param message the detail message explaining why the test construction failed
+     * @param cause   the underlying cause of the construction failure
+     */
     public TestConstructionException(String message, Throwable cause) {
         super(message, cause);
     }

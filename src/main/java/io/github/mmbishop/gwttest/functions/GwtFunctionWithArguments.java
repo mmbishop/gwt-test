@@ -28,6 +28,15 @@ import io.github.mmbishop.gwttest.model.Context;
 @FunctionalInterface
 public interface GwtFunctionWithArguments<T extends Context, V> {
 
+    /**
+     * Applies this function to the given context and arguments.
+     * <p>
+     * This method is invoked by the GWT test framework when executing {@code given}, {@code when},
+     * {@code then}, or {@code and} clauses that require multiple value arguments.
+     *
+     * @param context the test context containing fields and state used during test execution
+     * @param args    variable number of arguments of type {@code V} to be used by this function
+     */
     void apply(T context, V... args);
 
 }

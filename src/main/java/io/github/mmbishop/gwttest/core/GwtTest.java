@@ -16,20 +16,16 @@
 
 package io.github.mmbishop.gwttest.core;
 
-import io.github.mmbishop.gwttest.core.exceptions.ExpectedExceptionNotThrownException;
 import io.github.mmbishop.gwttest.core.exceptions.MalformedTestException;
 import io.github.mmbishop.gwttest.core.exceptions.TestConstructionException;
-import io.github.mmbishop.gwttest.core.exceptions.UnexpectedExceptionCaughtException;
 import io.github.mmbishop.gwttest.core.test.ConstructedGwtTest;
-import io.github.mmbishop.gwttest.functions.GwtFunction;
-import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
-import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
+import io.github.mmbishop.gwttest.core.test.InitializingGwtTest;
 import io.github.mmbishop.gwttest.model.Context;
 import io.github.mmbishop.gwttest.model.TestPhase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
 /**
@@ -61,7 +57,9 @@ public class GwtTest<T extends Context> {
     public ConstructedGwtTest<T> test() {
         if (testPhase == null) {
             try {
-                context = contextClass.getDeclaredConstructor().newInstance();
+                if (context == null) {
+                    context = contextClass.getDeclaredConstructor().newInstance();
+                }
                 context.testName = getCallingMethodName();
                 testPhase = TestPhase.CONSTRUCTED;
                 return new ConstructedGwtTest<>(context);
@@ -83,7 +81,9 @@ public class GwtTest<T extends Context> {
     public ConstructedGwtTest<T> test(String testName) {
         if (testPhase == null) {
             try {
-                context = contextClass.getDeclaredConstructor().newInstance();
+                if (context == null) {
+                    context = contextClass.getDeclaredConstructor().newInstance();
+                }
                 context.testName = testName;
                 testPhase = TestPhase.CONSTRUCTED;
                 return new ConstructedGwtTest<>(context);
@@ -93,6 +93,20 @@ public class GwtTest<T extends Context> {
             }
         }
         throw new MalformedTestException("Can't call test() more than once.");
+    }
+
+    /**
+     * The beginning of a Background clause for a test.
+     * @return an {@code InitializingGwtTest} object
+     */
+    public InitializingGwtTest<T> background() {
+        try {
+            context = contextClass.getDeclaredConstructor().newInstance();
+            return new InitializingGwtTest<>(context);
+        }
+        catch (Exception e) {
+            throw new TestConstructionException("Can't construct test", e);
+        }
     }
 
     private String getCallingMethodName() {

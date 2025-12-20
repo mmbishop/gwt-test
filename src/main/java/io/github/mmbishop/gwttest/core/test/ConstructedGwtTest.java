@@ -95,4 +95,17 @@ public class ConstructedGwtTest<T extends Context> {
         return whenClauseExecutor.executeWhenClause(gwtFunction, args);
     }
 
+    /**
+     * Executes the given method reference as background setup.
+     *
+     * @param backgroundMethod method reference to be executed as background setup
+     * @return this {@code ConstructedGwtTest} object
+     */
+    public final ConstructedGwtTest<T> withBackground(Runnable backgroundMethod) {
+        backgroundMethod.run();
+        return this;
+    }
+    
+    
+
 }

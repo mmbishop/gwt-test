@@ -1,5 +1,6 @@
 package io.github.mmbishop.gwttest.core.test;
 
+import io.github.mmbishop.gwttest.core.exceptions.MalformedTestException;
 import io.github.mmbishop.gwttest.functions.GwtFunction;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
@@ -26,6 +27,7 @@ import io.github.mmbishop.gwttest.model.Context;
 public class InitializingGwtTest<T extends Context> {
 
     private final FunctionInvoker<T> functionInvoker;
+    private boolean givenFound = false;
 
     /**
      * Constructs a new {@code InitializingGwtTest} instance for setting up test preconditions.
@@ -49,6 +51,7 @@ public class InitializingGwtTest<T extends Context> {
     @SafeVarargs
     public final InitializingGwtTest<T> given(GwtFunction<T>... gwtFunctions) {
         functionInvoker.invokeGwtFunctions(gwtFunctions);
+        givenFound = true;
         return this;
     }
 
@@ -62,6 +65,7 @@ public class InitializingGwtTest<T extends Context> {
      */
     public final <V> InitializingGwtTest<T> given(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
         functionInvoker.invokeGwtFunction(gwtFunction, arg);
+        givenFound = true;
         return this;
     }
 
@@ -76,6 +80,7 @@ public class InitializingGwtTest<T extends Context> {
     @SafeVarargs
     public final <V> InitializingGwtTest<T> given(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
         functionInvoker.invokeGwtFunction(gwtFunction, args);
+        givenFound = true;
         return this;
     }
 
@@ -86,6 +91,10 @@ public class InitializingGwtTest<T extends Context> {
      * @return this {@code InitializingGwtTest} object
      */
     public final InitializingGwtTest<T> and(GwtFunction<T> gwtFunction) {
+        if (!givenFound) {
+            throw new MalformedTestException("An And clause cannot be attached to a background without a preceding Given clause.");
+        }
+
         functionInvoker.invokeGwtFunctions(gwtFunction);
         return this;
     }
@@ -100,6 +109,10 @@ public class InitializingGwtTest<T extends Context> {
      * @return this {@code InitializingGwtTest} object
      */
     public final <V> InitializingGwtTest<T> and(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
+        if (!givenFound) {
+            throw new MalformedTestException("An And clause cannot be attached to a background without a preceding Given clause.");
+        }
+
         functionInvoker.invokeGwtFunction(gwtFunction, arg);
         return this;
     }
@@ -115,6 +128,10 @@ public class InitializingGwtTest<T extends Context> {
      */
     @SafeVarargs
     public final <V> InitializingGwtTest<T> and(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
+        if (!givenFound) {
+            throw new MalformedTestException("An And clause cannot be attached to a background without a preceding Given clause.");
+        }
+
         functionInvoker.invokeGwtFunction(gwtFunction, args);
         return this;
     }

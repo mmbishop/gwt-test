@@ -4,15 +4,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 1.4.0 - 2025-12-14
+## 1.4.0 - 2025-12-20
 
 ### Added
-- Support for the Gherkin But clause. For example: 
+- Support for Gherkin backgrounds. For example:
+```gherkin
+Background:
+  Given a customer named "Anna"
+  And a product named "Widget"
 ```
+can be defined in a before hook method as follows:
+```java
+@BeforeEach
+void background() {
+    gwt.background()
+        .given(a_customer_named, "Anna")
+        .and(a_product_named, "Widget");    
+}
+```
+- Support for the Gherkin But clause. For example: 
+```gherkin
 Given one thing 
 When I open my eyes 
 Then I should see that thing 
 But I shouldn't see something else
+```
+is specified as:
+```java
+@Test
+void i_should_see_that_thing_but_i_shouldnt_see_something_else() {
+    gwt.test()
+        .given(one_thing)
+        .when(i_open_my_eyes)
+        .then(i_should_see_that_thing)
+        .but(i_shouldnt_see_something_else);    
+}
 ```
 
 ### Fixed

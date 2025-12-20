@@ -21,37 +21,30 @@ public class BackgroundClauseTest {
     }
 
     @Test
-    void we_can_raise_the_number_to_a_power() {
+    void increment_the_value() {
         gwt.test()
-                .given(an_exponent, 2)
-                .when(when_raising_the_number_to_the_exponent)
-                .then(then_the_result_is, 100);
+                .when(incrementing_the_value)
+                .then(then_the_result_is, 11);
     }
 
     @Test
-    void we_can_cut_it_in_half() {
+    void decrement_the_value() {
         gwt.test()
-                .when(cutting_it_in_half)
-                .then(then_the_result_is, 5);
+                .when(decrementing_the_value)
+                .then(then_the_result_is, 9);
     }
 
     private final GwtFunctionWithArgument<BackgroundContext, Integer> a_starting_value =
             (context, arg) -> context.number = arg;
 
-    private final GwtFunctionWithArgument<BackgroundContext, Integer> an_exponent =
-            ((context, arg) -> context.exponent = arg);
+    private final GwtFunction<BackgroundContext> incrementing_the_value = context -> context.number++;
 
-    private final GwtFunction<BackgroundContext> when_raising_the_number_to_the_exponent =
-            context -> context.result = (int) Math.pow(context.number, context.exponent);
-
-    private final GwtFunction<BackgroundContext> cutting_it_in_half = context -> context.result = context.number / 2;
+    private final GwtFunction<BackgroundContext> decrementing_the_value = context -> context.number--;
 
     private final GwtFunctionWithArgument<BackgroundContext, Integer> then_the_result_is =
-            (context, expectedValue) -> assertThat(context.result, is(expectedValue));
+            (context, expectedValue) -> assertThat(context.number, is(expectedValue));
 
     public static class BackgroundContext extends Context {
         int number;
-        int exponent;
-        int result;
     }
 }

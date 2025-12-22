@@ -15,7 +15,6 @@ import io.github.mmbishop.gwttest.model.TestPhase;
  *   <li>Declare expected exceptions via {@link #expectingException(Class)}</li>
  *   <li>Define preconditions using {@code given()} methods</li>
  *   <li>Execute actions using {@code when()} methods</li>
- *   <li>Set up background state via {@link #withBackground(Runnable)}</li>
  * </ul>
  * <p>
  * The class supports method chaining to build fluent test definitions, and handles both
@@ -136,18 +135,5 @@ public class ConstructedGwtTest<T extends Context> {
     public final <V> ExecutedGwtTest<T> when(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
         return whenClauseExecutor.executeWhenClause(gwtFunction, args);
     }
-
-    /**
-     * Executes the given method reference as background setup.
-     *
-     * @param backgroundMethod method reference to be executed as background setup
-     * @return this {@code ConstructedGwtTest} object
-     */
-    public final ConstructedGwtTest<T> withBackground(Runnable backgroundMethod) {
-        backgroundMethod.run();
-        return this;
-    }
-    
-    
 
 }

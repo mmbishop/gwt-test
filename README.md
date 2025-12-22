@@ -25,19 +25,19 @@ To use gwt-test, include it as a dependency as follows:
 <dependency>
     <groupId>io.github.mmbishop</groupId>
     <artifactId>gwt-test</artifactId>
-    <version>1.3.1</version>
+    <version>1.4.0</version>
     <scope>test</scope>
 </dependency>
 ```
 
 **Gradle**
 ```
-testImplementation 'io.github.mmbishop:gwt-test:1.3.1'
+testImplementation 'io.github.mmbishop:gwt-test:1.4.0'
 ```
 
 **sbt**
 ```
-"io.github.mmbishop" % "gwt-test" % "1.3.1" % Test
+"io.github.mmbishop" % "gwt-test" % "1.4.0" % Test
 ```
 
 ## Language Support
@@ -71,7 +71,7 @@ or fix a bug isn't changing the required behavior of the code, so the tests shou
 
 The product purchase scenario shown above can be expressed using gwt-test as follows:
 
-```
+```java
 @Test
 void customer_purchases_product_and_receives_invoice() {
     gwt.test()
@@ -85,7 +85,7 @@ void customer_purchases_product_and_receives_invoice() {
 
 The test can also be written like this:
 
-```
+```java
 @Test
 void customer_purchases_product_and_receives_invoice() {
     gwt.test()
@@ -115,7 +115,7 @@ The base class Context contains some test metadata that may be useful, including
 or _then_). The context class you define in your test will contain everything needed to run your test methods. The name of your context class is arbitrary. The
 only requirements are that it extend Context, and it must be public so that gwt-test can instantiate it. An example of a test context class is the following:
 
-```
+```java
 public static class TestContext extends Context {
     Customer customer;
     Invoice invoice;
@@ -128,7 +128,7 @@ public static class TestContext extends Context {
 You must obtain an instance of [GwtTest](src/main/java/io/github/mmbishop/gwttest/core/GwtTest.java) that you will use to run the tests. Typically, this is a 
 class-wide field in your test class. To get a GwtTest instance that uses the above context class, use the following declaration:
 
-```
+```java
 private final GwtTest<TestContext> gwt = new GwtTest<>(TestContext.class);
 ```
 
@@ -156,7 +156,7 @@ you used to instantiate the GwtTest instance):
 ```GwtFunction<T>``` takes an instance of the context class as its sole argument. This context instance is passed in by gwt-test, so you don't have to worry about it.
 An example of a ```GwtFunction``` declaration is:
 
-```
+```java
 private final GwtFunction<TestContext> multiplying_the_numbers_together = context -> {
     context.product = 1;
     for (Integer number : context.numbers) {
@@ -170,7 +170,7 @@ private final GwtFunction<TestContext> multiplying_the_numbers_together = contex
 ```GwtFunctionWithArgument<T, V>``` takes an instance of the context class and an object of type ```V``` as its arguments. An example of a
 ```GwtFunctionWithArgument``` declaration is:
 
-```
+```java
 private final GwtFunctionWithArgument<TestContext, Integer> the_calculated_product_is = (context, expectedProduct) -> {
     assertThat(context.product, is(expectedProduct));
 };
@@ -181,7 +181,7 @@ private final GwtFunctionWithArgument<TestContext, Integer> the_calculated_produ
 Finally, ```GwtFunctionWithArguments<T, V>``` takes an instance of the context class and a varargs array of type V as its arguments. An example of a
 ```GwtFunctionWithArguments``` declaration is:
 
-```
+```java
 private final GwtFunctionWithArguments<TestContext, Integer> the_numbers = (context, numbers) -> {
     context.numbers = new ArrayList<Integer>();
     for (Integer number : numbers) {
@@ -194,7 +194,7 @@ private final GwtFunctionWithArguments<TestContext, Integer> the_numbers = (cont
 
 A test using the above functions may look something like this:
 
-```
+```java
 @Test
 void product_of_multiple_numbers_is_calculated() {
     gwt.test()
@@ -208,7 +208,7 @@ void product_of_multiple_numbers_is_calculated() {
 
 You can have multiple when-then clauses in a single test:
 
-```
+```java
 @Test
 void numbers_can_be_multiplied_and_divided() {
     gwt.test()
@@ -220,12 +220,30 @@ void numbers_can_be_multiplied_and_divided() {
 }
 ```
 
+### Background
+
+Gherkin provides a Background section that contains ```Given```s that are common to all test scenarios in a feature. gwt-test supports backgrounds 
+using before hooks. To define a background, create a before hook method and call the ```background``` method within it. For example:
+
+```java
+@BeforeEach
+void establishBackground() {
+    gwt.background()
+        .given(a_customer_named, "Anna"),
+        .and(a_product_named, "Widget");
+}
+```
+
+The ```background``` method creates an instance of the context class so that the following ```given```s and ```and```s can initialize it.
+(In test classes with a background, the ```test``` method will not create a new context instance since it will already exist.) In this example, each
+test will start with a context containing a customer named Anna and a product named Widget.
+
 ## Exception handling
 
 Any exception thrown during a test will be caught and rethrown by gwt-test (in which case the test fails) unless the exception class is declared as an 
 expected exception. To declare an exception as expected, use the ```expectingException``` method as follows:
 
-```
+```java
 gwt.test().expectingException(ExpectedExceptionClass.class)
 ```
 
@@ -239,7 +257,7 @@ If an exception is declared via ```expectingException``` but no exception is thr
 The base [Context](src/main/java/io/github/mmbishop/gwttest/model/Context.java) class has a property called ```thrownException``` that stores any exception that is
 thrown during the execution of a test. To check if an expected exception was thrown, you can simply check that property. For example,
 
-```
+```java
 private final GwtFunction<TestContext> an_exception_is_thrown = context -> assertNotNull(context.thrownException);
 ```
 
@@ -267,10 +285,11 @@ in your project. Hamcrest is recommended as its matcher methods are very useful 
 
 ### Why Snake Case?
 
-You've probably noticed that the test method and function names are specified using snake case. You don't have to use snake case; camel case is perfectly fine. I use
-snake case in my test classes because it's possible that I may need to ask a domain expert or business analyst to look at a test
+You've probably noticed that the test method and function names are specified using snake case. You don't have to use snake case; camel case is 
+perfectly fine. I use snake case in my test classes because it's possible that I may need to ask a domain expert or business analyst to look at a test
 to make sure I'm covering all of the cases. They are much more likely to want to read snake case than camel case. All I would ask them to read is the test
-methods (those annotated with @Test). Any other supporting methods I write will be named using camel case since I expect only developers to look at that code.
+methods (those annotated with @Test). Any other supporting methods I write will be named using camel case since I expect only developers to look at 
+that code.
 
 ## Logging
 

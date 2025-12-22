@@ -40,7 +40,7 @@ class DivisionTest {
                 .given(a_dividend, 12.0)
                 .and(a_divisor, 4.0)
                 .when(dividing_the_dividend_by_the_divisor)
-                .then(the_quotient_is, 3.0);
+                .then(the_quotient_is, 3.0)
     }
 
     @Test
@@ -48,7 +48,7 @@ class DivisionTest {
         gwt.test()
                 .given(a_dividend, 6.0)
                 .when(dividing_the_dividend_by_zero)
-                .then(the_quotient_is_infinity);
+                .then(the_quotient_is_infinity)
     }
 
     private final GwtFunctionWithArgument<TestContext, Double> a_dividend  

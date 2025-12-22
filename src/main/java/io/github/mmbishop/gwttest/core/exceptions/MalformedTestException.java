@@ -14,13 +14,18 @@
  * limitations under the License.
  */
 
-package io.github.mmbishop.gwttest.core;
+package io.github.mmbishop.gwttest.core.exceptions;
 
 /**
  * An exception that is thrown when a GWT test is malformed (e.g., given invoked after when).
  */
 public class MalformedTestException extends RuntimeException {
 
+    /**
+     * Constructs a new MalformedTestException with the specified detail message.
+     *
+     * @param message the detail message explaining why the test is malformed
+     */
     public MalformedTestException(String message) {
         super(message);
     }

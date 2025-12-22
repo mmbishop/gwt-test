@@ -13,7 +13,7 @@ There are several significant differences in the use of gwt-test in Kotlin compa
 Here's an example of a gwt-test written in Kotlin:
 
 ```kotlin
-package com.apc.its.ecm.sandbox.model
+package gwttest.example
 
 import io.github.mmbishop.gwttest.core.GwtTest
 import io.github.mmbishop.gwttest.functions.GwtFunction

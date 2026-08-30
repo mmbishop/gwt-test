@@ -41,7 +41,6 @@ public class ExecutedGwtTest<T extends Context> {
      */
     @SafeVarargs
     public final AssertedGwtTest<T> then(GwtFunction<T>... gwtFunctions) {
-        ifExpectedExceptionWasDeclaredButNotThrownThenFailTheTest();
         context.testPhase = TestPhase.THEN;
         functionInvoker.invokeGwtFunctions(gwtFunctions);
         return new AssertedGwtTest<>(context);
@@ -57,7 +56,6 @@ public class ExecutedGwtTest<T extends Context> {
      */
     @SafeVarargs
     public final <V> AssertedGwtTest<T> then(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
-        ifExpectedExceptionWasDeclaredButNotThrownThenFailTheTest();
         context.testPhase = TestPhase.THEN;
         functionInvoker.invokeGwtFunction(gwtFunction, args);
         return new AssertedGwtTest<>(context);
@@ -72,16 +70,9 @@ public class ExecutedGwtTest<T extends Context> {
      * @return this {@code AssertedGwtTest} object
      */
     public final <V> AssertedGwtTest<T> then(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
-        ifExpectedExceptionWasDeclaredButNotThrownThenFailTheTest();
         context.testPhase = TestPhase.THEN;
         functionInvoker.invokeGwtFunction(gwtFunction, arg);
         return new AssertedGwtTest<>(context);
-    }
-
-    private void ifExpectedExceptionWasDeclaredButNotThrownThenFailTheTest() {
-        if (context.expectedExceptionClass != null && context.thrownException == null) {
-            throw new ExpectedExceptionNotThrownException(context.expectedExceptionClass);
-        }
     }
 
 }

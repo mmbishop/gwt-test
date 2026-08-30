@@ -1,5 +1,6 @@
 package io.github.mmbishop.gwttest.core.test;
 
+import io.github.mmbishop.gwttest.core.exceptions.ExpectedExceptionNotThrownException;
 import io.github.mmbishop.gwttest.functions.GwtFunction;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArgument;
 import io.github.mmbishop.gwttest.functions.GwtFunctionWithArguments;
@@ -32,6 +33,7 @@ public class WhenClauseExecutor<T extends Context> {
     public final ExecutedGwtTest<T> executeWhenClause(GwtFunction<T>... gwtFunctions) {
         context.testPhase = TestPhase.WHEN;
         functionInvoker.invokeGwtFunctions(gwtFunctions);
+        ifExpectedExceptionWasDeclaredButNotThrownThenFailTheTest();
         return new ExecutedGwtTest<>(context);
     }
 
@@ -46,6 +48,7 @@ public class WhenClauseExecutor<T extends Context> {
     public final <V> ExecutedGwtTest<T> executeWhenClause(GwtFunctionWithArgument<T, V> gwtFunction, V arg) {
         context.testPhase = TestPhase.WHEN;
         functionInvoker.invokeGwtFunction(gwtFunction, arg);
+        ifExpectedExceptionWasDeclaredButNotThrownThenFailTheTest();
         return new ExecutedGwtTest<>(context);
     }
 
@@ -61,6 +64,13 @@ public class WhenClauseExecutor<T extends Context> {
     public final <V> ExecutedGwtTest<T> executeWhenClause(GwtFunctionWithArguments<T, V> gwtFunction, V... args) {
         context.testPhase = TestPhase.WHEN;
         functionInvoker.invokeGwtFunction(gwtFunction, args);
+        ifExpectedExceptionWasDeclaredButNotThrownThenFailTheTest();
         return new ExecutedGwtTest<>(context);
+    }
+
+    private void ifExpectedExceptionWasDeclaredButNotThrownThenFailTheTest() {
+        if (context.expectedExceptionClass != null && context.thrownException == null) {
+            throw new ExpectedExceptionNotThrownException(context.expectedExceptionClass);
+        }
     }
 }

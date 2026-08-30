@@ -97,6 +97,18 @@ public class ExceptionTest {
         }
     }
 
+    @Test
+    void test_fails_when_expected_exception_is_not_thrown_and_there_is_no_then_clause() {
+        try {
+            gwt.test().expectingException(RuntimeException.class)
+                    .when(doing_something_that_does_not_result_in_an_exception);
+            Assertions.fail();  // ExpectedExceptionNotThrownException should have been thrown.
+        }
+        catch (ExpectedExceptionNotThrownException e) {
+            // Test succeeds if this exception is thrown.
+        }
+    }
+
     private final GwtFunction<ExceptionContext> doing_something_that_does_not_result_in_an_exception = context -> {
         return;
     };
